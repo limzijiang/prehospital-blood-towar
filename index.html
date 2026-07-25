@@ -501,7 +501,7 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         <div class="card amber">
           <h3>為什麼用叢集隨機？</h3>
           <p class="fine">因為血品是<strong>放在直升機上</strong>的，不可能對每個病人即時抽籤決定機上帶什麼。以基地/月份為單位輪換可以<strong>減少血品浪費</strong>、簡化配送後勤，並讓保存天數的觀察性子研究有足夠檢力。</p>
-          <p class="fine" style="margin-top:.6rem"><strong>代價：</strong>無法遮盲、交叉汙染難免、且 ICC 若被低估會影響檢力。（實際 ICC = 0.01，叢集效應可忽略。）</p>
+          <p class="fine" style="margin-top:.6rem"><strong>代價：</strong>無法遮盲、交叉汙染難免，而且<strong>檢力會被「叢集」吃掉一部分</strong>——吃掉多少，取決於 ICC。<span class="hl">（下一頁專門解釋這件事）</span></p>
         </div>
         <div class="card teal" style="margin-top:1rem">
           <h3>納入條件</h3>
@@ -509,6 +509,69 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
           <p class="fine" style="margin-top:.5rem"><strong>主要排除：</strong>&lt;18 或 &gt;90 歲、站姿平地跌倒、溺水、上吊、燒傷、懷孕、受刑人、<strong>創傷性心跳停止</strong>、穿刺性腦傷、無法建立 IV/IO、拒絕參與。</p>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11b ───────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播</div>
+  <h2>ICC 是什麼？為什麼它會偷走檢力？<span class="sub">看懂叢集隨機試驗，這一個數字就夠了</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <h3>① ICC＝同一個叢集裡的病人有多「像」</h3>
+        <p><strong>組內相關係數（intraclass correlation coefficient）</strong>回答一句話：<em>「知道病人是哪個基地送來的，能幫我多準確預測他的結果？」</em></p>
+        <ul>
+          <li><strong>ICC = 0</strong>：基地完全不影響結果 → 每個病人都是獨立的一筆資訊</li>
+          <li><strong>ICC 越大</strong>：同基地病人結果越相似（同一組人員、同一套習慣、同一家後送醫院）</li>
+        </ul>
+        <p class="fine">生活化版本：問卷只訪問 10 個家庭、每家 5 人，你<strong>不能</strong>當成 50 個獨立樣本——同一家人的答案本來就很像。TOWAR 的「家庭」就是<strong>空中救護基地</strong>。</p>
+      </div>
+      <div class="card amber">
+        <h3>② 於是「有效樣本數」會縮水</h3>
+        <p>叢集試驗要用<strong>設計效應（design effect）</strong>把樣本數放大回來：</p>
+        <p style="text-align:center;font-size:clamp(19px,1.3vw,24px);margin:.6rem 0"><strong>DE = 1 + (m − 1) × ICC</strong></p>
+        <p class="fine">m = 每個叢集平均人數。TOWAR：1,020 人 ÷ 44 個基地 ≒ <strong>每基地 23 人</strong>。</p>
+        <table style="margin-top:.5rem">
+          <thead><tr><th>ICC</th><th class="num">設計效應</th><th class="num">實際有效樣本</th></tr></thead>
+          <tbody>
+            <tr class="key"><td>0.01 <span class="fine">← 實際觀察值</span></td><td class="num">1.22</td><td class="num"><strong>≈ 835</strong></td></tr>
+            <tr><td>0.02 <span class="fine">← 設計時的假設</span></td><td class="num">1.44</td><td class="num">≈ 707</td></tr>
+            <tr><td>0.05</td><td class="num">2.11</td><td class="num">≈ 484</td></tr>
+            <tr><td>0.10</td><td class="num">3.22</td><td class="num">≈ 317</td></tr>
+          </tbody>
+          <caption>設計效應與有效樣本為<strong>本簡報依上式的示意概算</strong>（TOWAR 實際採用混合效應模型、以基地為隨機截距，非單純放大樣本數）。</caption>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11c ───────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播（續）</div>
+  <h2>那 TOWAR 到底有沒有被叢集吃掉檢力？<span class="sub">答案是沒有——而這正是為什麼陰性結果不能怪設計</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card red">
+        <h3>③ 所以「低估 ICC」才是危險的方向</h3>
+        <ul class="cross">
+          <li><strong>低估 ICC</strong>（以為 0.01、其實 0.05）→ 樣本數放大得不夠 → <span class="hl">實際有效樣本遠少於預期 → 試驗檢力不足 → 容易做出假陰性</span></li>
+        </ul>
+        <ul class="tick">
+          <li><strong>高估 ICC</strong>（以為 0.02、其實 0.01）→ 只是<em>保守</em>，白賺檢力，不會害你</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <h3>④ TOWAR 實際發生了什麼</h3>
+        <p>設計時假設 <strong>ICC = 0.02</strong>；實際觀察到 <span class="hl2">ICC = 0.01（95% CI −0.02 – 0.04）</span>，作者稱之為「negligible clustering，無統計上有意義的基地間差異」。</p>
+        <p class="fine" style="margin-top:.5rem">（CI 下界為負值是變異數估計法的正常現象，實務上就讀作「測不到叢集效應」。）</p>
+        <p style="margin-top:.5rem"><strong>方向是「高估」，不是低估。</strong></p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>這頁的結論，也是評讀 TOWAR 的關鍵一句：</strong>叢集隨機<span class="hl2">並沒有偷走這個試驗的檢力</span>——真實的叢集效應比設計時假設的還小，有效樣本反而比預期多。<span class="hl">所以陰性結果不能歸咎於「用了叢集設計」</span>；真正的檢力問題出在別處：把差異假設成 26%→16%（整整 10 個百分點）太樂觀，以及全血組 31.6% 交叉收到成分血。</p>
     </div>
   </div>
 </section>
