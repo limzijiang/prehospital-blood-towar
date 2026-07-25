@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>到院前輸血：從 TOWAR 到新北的戰傷佈局</title>
+<style>
+:root{
+  --bg:#0c0e13; --panel:#151a23; --panel2:#1c222d; --line:#2a323f;
+  --ink:#e9edf3; --muted:#a6b0be; --dim:#7d8796;
+  --red:#e2404c; --red-d:#b31b28; --amber:#f0a836; --teal:#3ec6b4; --blue:#5aa9e6; --green:#5fbf6a;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:20px}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,-apple-system,sans-serif;
+  font-size:1rem; line-height:1.6; overflow:hidden;
+}
+.deck{position:relative;width:100vw;height:100vh}
+.slide{
+  position:absolute;inset:0;display:none;flex-direction:column;
+  padding:3.2vh 4.2vw 7vh;overflow-y:auto;
+}
+.slide.on{display:flex;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* ---------- typography ---------- */
+.kicker{font-size:.9rem;letter-spacing:.16em;color:var(--red);font-weight:700;text-transform:uppercase;margin-bottom:.5rem}
+h1{font-size:clamp(30px,3.4vw,50px);line-height:1.22;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(26px,2.5vw,36px);line-height:1.25;font-weight:800;margin-bottom:1.1rem}
+h2 .sub{display:block;font-size:clamp(18px,1.05vw,21px);font-weight:500;color:var(--muted);margin-top:.45rem;letter-spacing:0}
+h3{font-size:clamp(20px,1.35vw,26px);font-weight:700;margin-bottom:.5rem}
+p,li{font-size:clamp(18px,1.1vw,22px)}
+.fine{font-size:18px!important;color:var(--muted);line-height:1.5}
+strong{color:#fff}
+em{color:var(--amber);font-style:normal;font-weight:700}
+.hl{color:var(--red);font-weight:700}
+.hl2{color:var(--teal);font-weight:700}
+ul{list-style:none}
+ul li{position:relative;padding-left:1.35em;margin-bottom:.6em}
+ul li::before{content:"";position:absolute;left:.15em;top:.62em;width:.45em;height:.45em;border-radius:50%;background:var(--red)}
+ul.tick li::before{content:"✓";background:none;color:var(--teal);font-weight:800;top:0;left:0;width:auto;height:auto}
+ul.cross li::before{content:"✕";background:none;color:var(--red);font-weight:800;top:0;left:0;width:auto;height:auto}
+ol{padding-left:1.4em}ol li{margin-bottom:.55em}
+
+/* ---------- layout ---------- */
+.body{flex:1;display:flex;flex-direction:column;gap:1.1rem;min-height:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;align-items:start}
+.cols3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.c64{display:grid;grid-template-columns:1.55fr 1fr;gap:1.4rem;align-items:start}
+.c46{display:grid;grid-template-columns:1fr 1.55fr;gap:1.4rem;align-items:start}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.25rem}
+.card.red{border-color:rgba(226,64,76,.45);background:linear-gradient(180deg,rgba(226,64,76,.10),rgba(226,64,76,.02))}
+.card.teal{border-color:rgba(62,198,180,.4);background:linear-gradient(180deg,rgba(62,198,180,.09),transparent)}
+.card.amber{border-color:rgba(240,168,54,.42);background:linear-gradient(180deg,rgba(240,168,54,.10),transparent)}
+.card h3{margin-bottom:.55rem}
+.card .lbl{font-size:18px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:.35rem}
+
+/* ---------- title slide ---------- */
+.title{justify-content:center;background:
+  radial-gradient(1100px 520px at 12% 8%,rgba(179,27,40,.30),transparent 60%),
+  radial-gradient(900px 500px at 92% 92%,rgba(62,198,180,.12),transparent 60%);}
+.title h1{max-width:22em}
+.title .lede{font-size:clamp(19px,1.25vw,24px);color:var(--muted);margin-top:1.3rem;max-width:34em}
+.byline{margin-top:2.2rem;padding-top:1.2rem;border-top:1px solid var(--line);font-size:18px;color:var(--dim)}
+.cite-badge{display:inline-block;background:rgba(226,64,76,.14);border:1px solid rgba(226,64,76,.5);
+  color:#ffb3b8;border-radius:999px;padding:.3rem .95rem;font-size:18px;font-weight:600;margin-top:1.5rem}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.9rem}
+.stat{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:.95rem 1rem;text-align:center}
+.stat .n{font-size:clamp(28px,2.6vw,40px);font-weight:800;line-height:1.1;color:var(--red)}
+.stat .n.t{color:var(--teal)}.stat .n.a{color:var(--amber)}.stat .n.w{color:#fff}
+.stat .k{font-size:18px;color:var(--muted);margin-top:.3rem}
+
+/* ---------- table ---------- */
+table{width:100%;border-collapse:collapse;font-size:18px}
+th,td{padding:.5rem .6rem;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{font-size:18px;color:var(--dim);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tr.key{background:rgba(226,64,76,.10)}
+tr.key td{font-weight:700;color:#fff}
+caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padding-top:.6rem}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;padding-left:1.6rem;border-left:2px solid var(--line)}
+.tl .ev{position:relative;margin-bottom:1.05rem}
+.tl .ev::before{content:"";position:absolute;left:calc(-1.6rem - 6px);top:.5em;width:11px;height:11px;border-radius:50%;
+  background:var(--red);box-shadow:0 0 0 4px rgba(226,64,76,.16)}
+.tl .ev.q::before{background:var(--teal);box-shadow:0 0 0 4px rgba(62,198,180,.16)}
+.tl .yr{font-weight:800;color:var(--amber);font-size:19px;letter-spacing:.03em}
+.tl .tx{font-size:19px;color:var(--ink)}
+.tl .tx span{color:var(--muted)}
+
+/* ---------- forest plot ---------- */
+.forest{width:100%;font-size:18px}
+.forest .row{display:grid;grid-template-columns:minmax(150px,1.4fr) 96px 96px 1.6fr 118px;gap:.5rem;align-items:center;
+  padding:.34rem 0;border-bottom:1px solid rgba(42,50,63,.6)}
+.forest .row.hd{color:var(--dim);font-weight:700;font-size:18px;border-bottom:1px solid var(--line)}
+.forest .row.tot{background:rgba(226,64,76,.09);font-weight:700}
+.forest .bar{position:relative;height:22px}
+.forest .bar::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--dim);opacity:.55}
+.forest .ci{position:absolute;top:10px;height:2px;background:var(--muted)}
+.forest .pt{position:absolute;top:5px;width:12px;height:12px;border-radius:2px;background:var(--red);transform:translateX(-6px)}
+.forest .num{text-align:right;font-variant-numeric:tabular-nums}
+.axis{display:flex;justify-content:space-between;font-size:18px;color:var(--dim);margin-top:.3rem}
+
+/* ---------- misc ---------- */
+.big-q{font-size:clamp(24px,2.1vw,34px);font-weight:800;line-height:1.35}
+.quote{border-left:3px solid var(--red);padding:.5rem 0 .5rem 1.1rem;font-size:clamp(19px,1.2vw,24px);color:#fff;font-style:italic}
+.quote cite{display:block;font-size:18px;color:var(--dim);font-style:normal;margin-top:.5rem}
+.pill{display:inline-block;background:var(--panel2);border:1px solid var(--line);border-radius:999px;
+  padding:.25rem .8rem;font-size:18px;margin:.2rem .3rem .2rem 0;color:var(--muted)}
+.pill.r{border-color:rgba(226,64,76,.5);color:#ffb3b8}
+.pill.t{border-color:rgba(62,198,180,.45);color:#a6ece2}
+.flow{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap;font-size:18px}
+.flow .box{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:.55rem .8rem;flex:1;min-width:120px}
+.flow .arw{color:var(--red);font-weight:800;font-size:22px}
+.note{background:rgba(240,168,54,.09);border-left:3px solid var(--amber);border-radius:0 10px 10px 0;padding:.75rem 1rem}
+.note p,.note li{font-size:18px}
+.two-up{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.two-up>div{padding:1rem 1.15rem}
+.two-up>div:first-child{background:linear-gradient(180deg,rgba(226,64,76,.10),transparent);border-right:1px solid var(--line)}
+.two-up>div:last-child{background:linear-gradient(180deg,rgba(90,169,230,.09),transparent)}
+
+/* ---------- chrome ---------- */
+.foot{position:absolute;left:0;right:0;bottom:0;height:4.6vh;min-height:34px;display:flex;align-items:center;
+  justify-content:space-between;padding:0 4.2vw;background:linear-gradient(180deg,transparent,rgba(0,0,0,.45));
+  font-size:18px;color:var(--dim);pointer-events:none}
+.prog{position:absolute;left:0;bottom:0;height:3px;background:var(--red);transition:width .3s ease;z-index:5}
+.nav{position:fixed;right:1.1vw;bottom:1.1vh;display:flex;gap:.4rem;z-index:10}
+.nav button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:9px;
+  width:2.1rem;height:2.1rem;font-size:19px;cursor:pointer;line-height:1}
+.nav button:hover{border-color:var(--red);color:#fff}
+/* compact variant for data-dense slides (keeps 18px floor) */
+.slide.dense h2{margin-bottom:.65rem}
+.slide.dense .body{gap:.7rem}
+.slide.dense th,.slide.dense td{padding:.32rem .55rem;line-height:1.4}
+.slide.dense .forest .row{padding:.1rem 0}
+.slide.dense .axis{margin-top:.2rem}
+.slide.dense .forest .row{line-height:1.3}
+.slide.dense .fine{line-height:1.38}
+.slide.dense ul li{margin-bottom:.32em}
+.slide.dense .note{padding:.6rem .9rem}
+.slide.dense .note p{line-height:1.45}
+.slide.dense h3{margin-bottom:.35rem}
+.slide.dense caption{padding-top:.4rem;line-height:1.4}
+.slide.dense .forest .bar{height:17px}
+.slide.dense .forest .ci{top:8px}
+.slide.dense .forest .pt{top:3px;width:11px;height:11px}
+.slide.dense ol li{margin-bottom:.3em}
+
+@media print{
+  html{font-size:15px}body{overflow:visible}
+  .slide{display:flex!important;position:relative;height:100vh;page-break-after:always;animation:none}
+  .nav,.prog{display:none}
+}
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+<!-- 1 ─────────────────────────────────────────── -->
+<section class="slide title">
+  <div class="kicker">NEJM Journal Club × 到院前緊急醫療</div>
+  <h1>到院前輸血：<br>從 <span class="hl">TOWAR</span> 試驗回看百年戰場，<br>再看新北的戰傷佈局</h1>
+  <p class="lede">Sperry JL, Guyette FX, et al. <strong>Prehospital Resuscitation with Type O Whole Blood for Trauma and Hemorrhage.</strong> N Engl J Med 2026;394:2317-28.</p>
+  <div class="cite-badge">DOI 10.1056/NEJMoa2602167　•　NCT04684719</div>
+  <div class="byline">報告對象：急診主治醫師 / 住院醫師 / 醫學生　—　新北市，2026</div>
+</section>
+
+<!-- 2 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Roadmap</div>
+  <h2>今天的三條線<span class="sub">一篇 RCT，串起一段百年史，和一件正在新北發生的事</span></h2>
+  <div class="body">
+    <div class="cols3">
+      <div class="card red">
+        <div class="lbl">Line 1 ─ 歷史</div>
+        <h3>1917 → 2026</h3>
+        <p class="fine">前線輸血從一箱冰塊開始。全血 → 成分輸血 → 再回到全血，這個鐘擺擺了整整一百年，而每一次都是戰爭推動的。</p>
+      </div>
+      <div class="card teal">
+        <div class="lbl">Line 2 ─ EBM</div>
+        <h3>PAMPer → TOWAR / SWiFT</h3>
+        <p class="fine">到院前「給不給血」與「給全血還是成分」是<strong>兩個不同的問題</strong>。2026 年這兩篇 NEJM 只回答了後者。</p>
+      </div>
+      <div class="card amber">
+        <div class="lbl">Line 3 ─ 台灣</div>
+        <h3>新北，全國第一例</h3>
+        <p class="fine">2025/7/23 萬里。三年籌備、雙軌派遣、一袋血。這不只是急救創新，這是戰傷醫療的國土佈局。</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>今天希望你帶走的一句話：</strong>TOWAR 告訴我們「全血沒有比成分更好」，但它<em>完全沒有</em>否定「到院前給血」——而後者，正是台灣現在必須練會的能力。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">The Problem</div>
+  <h2>出血：創傷中最「可預防」的死因<span class="sub">我們爭的不是幾小時，是幾分鐘</span></h2>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><div class="n">#1</div><div class="k">創傷可預防死亡的首因</div></div>
+      <div class="stat"><div class="n a">↓74%</div><div class="k">戰傷院前輸血的 24 小時死亡風險<br><span class="fine">Shackelford, JAMA 2017</span></div></div>
+      <div class="stat"><div class="n">+11%</div><div class="k">每延遲 1 分鐘輸血，死亡率上升</div></div>
+      <div class="stat"><div class="n t">&lt;10 min</div><div class="k">大量出血者可耗盡循環血量的時間尺度</div></div>
+    </div>
+    <div class="cols">
+      <div class="card">
+        <h3>致命三角 → 致命四角</h3>
+        <ul>
+          <li><strong>凝血功能異常</strong> Coagulopathy</li>
+          <li><strong>低體溫</strong> Hypothermia</li>
+          <li><strong>酸血症 / 灌流不足</strong> Acidosis</li>
+          <li><strong>低血鈣</strong> Hypocalcemia ← 第四角</li>
+        </ul>
+        <p class="fine">晶體液補得越多，四個角落越糟：稀釋性凝血功能異常、體溫下降、內皮糖萼受損。「給液體」和「給血」在生理上不是同一件事。</p>
+      </div>
+      <div class="card red">
+        <h3>所以院前介入的邏輯很單純</h3>
+        <p>如果病人在<strong>抵達醫院前</strong>就已經走進致命四角，那麼在醫院門口才開始的完美復甦，來得太晚。</p>
+        <div class="flow" style="margin-top:.9rem">
+          <div class="box">現場<br><span class="fine">出血開始</span></div><div class="arw">→</div>
+          <div class="box">脫困 / 運送<br><span class="fine">30–90 min</span></div><div class="arw">→</div>
+          <div class="box">創傷中心<br><span class="fine">MTP 啟動</span></div>
+        </div>
+        <p class="fine" style="margin-top:.8rem">院前輸血要做的，就是把中間那一段「只有晶體液」的空窗填起來。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">History ① ─ 1917</div>
+  <h2>一切都從一箱冰塊開始<span class="sub">第一次世界大戰：把血帶到前線的兩個 Robertson</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div class="tl">
+        <div class="ev"><div class="yr">1914–15</div><div class="tx"><strong>Lawrence Bruce Robertson</strong>（加拿大軍醫）在西線力主<span>把輸血用在傷兵的休克復甦上</span>，而不是留給後方醫院——當年這是異端。</div></div>
+        <div class="ev"><div class="yr">1915</div><div class="tx"><strong>檸檬酸鈉（sodium citrate）</strong>被證實為有效抗凝劑：血液第一次可以「離體儲存」。</div></div>
+        <div class="ev"><div class="yr">1917</div><div class="tx"><strong>Oswald Hope Robertson</strong>（美國軍醫）建立史上第一個<span class="hl">血液儲存站（blood depot）</span>：招募 O 型捐血者、加檸檬酸與葡萄糖、裝瓶，放進<strong>彈藥箱+木屑+冰塊</strong>推到前線，可保存數週。</div></div>
+        <div class="ev q"><div class="yr">1918</div><div class="tx">Cambrai 戰役中以預存血液復甦重傷兵——被後世稱為<span>「本次大戰最重要的醫學進展」</span>。</div></div>
+      </div>
+      <div class="card red">
+        <h3>他們一次解決了三個問題</h3>
+        <ul class="tick">
+          <li><strong>相容性</strong>：只用 O 型 → 不必等交叉配對</li>
+          <li><strong>保存</strong>：抗凝＋冷鏈 → 血可以「等病人」</li>
+          <li><strong>前推</strong>：血跟著傷患走，而不是傷患去找血</li>
+        </ul>
+        <p class="fine" style="margin-top:.9rem">認得出來嗎？<strong>O 型、預先備血、冷鏈、前推部署</strong>——這正是 2026 年 TOWAR 與新北雙軌派遣在做的同一件事。109 年後我們仍在解同一道題。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">History ② ─ 1936–1975</div>
+  <h2>移動血庫、全血的黃金時代<span class="sub">西班牙內戰 → 二戰 → 韓戰 → 越戰</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <h3>1936–39　西班牙內戰</h3>
+        <p>加拿大胸腔外科醫師 <strong>Norman Bethune（白求恩）</strong>把改裝廂型車變成<span class="hl">移動輸血隊</span>，直接開到火線後方替傷兵輸血——「不要把血放在後方等傷兵，把血開到傷兵身邊」。</p>
+        <p class="fine">他甚至實驗過屍體血輸注（cadaver blood）。這是人類第一個成建制的「<strong>院前輸血服務</strong>」。</p>
+      </div>
+      <div class="card">
+        <h3>1939–75　全血就是復甦的同義詞</h3>
+        <ul>
+          <li>二戰、韓戰、越戰：<strong>新鮮全血</strong>是戰場復甦主力</li>
+          <li>越戰某 18 個月期間輸注 <strong>230,323 單位全血</strong></li>
+          <li>「一袋血」= 紅血球 + 血漿 + 血小板 + 凝血因子，一次到位</li>
+        </ul>
+        <p class="fine">當年沒有人爭論「全血 vs 成分」——因為成分輸血還沒被發明出來。</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>教學重點：</strong>院前輸血不是新科技，是<em>被遺忘的舊科技</em>。它在戰爭中誕生、在戰爭中成熟，然後在和平年代的醫院裡被效率邏輯取代。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 6 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">History ③ ─ 1970s–1990s</div>
+  <h2>鐘擺盪向成分輸血<span class="sub">全血為什麼消失了？——一個關於效率的答案</span></h2>
+  <div class="body">
+    <div class="two-up">
+      <div>
+        <div class="lbl" style="color:var(--red)">推力：分離技術</div>
+        <h3>一袋血救四個人</h3>
+        <ul>
+          <li>塑膠血袋、離心分離技術成熟</li>
+          <li>紅血球、血漿、血小板、冷凍沉澱品各有適應症與最佳保存條件</li>
+          <li>血庫庫存管理效率大幅提升、浪費下降</li>
+        </ul>
+        <p class="fine">對「慢性貧血、擇期手術、腫瘤科」——成分輸血是不折不扣的進步。</p>
+      </div>
+      <div>
+        <div class="lbl" style="color:var(--blue)">代價：大出血病人</div>
+        <h3>再也拼不回一袋血</h3>
+        <ul>
+          <li>1:1:1 需要<strong>三條管路、三種產品、三份庫存</strong></li>
+          <li>加總後 Hct、凝血因子活性、血小板功能都<strong>比原本的全血差</strong></li>
+          <li>抗凝劑與保存液被稀釋進病人體內（低血鈣的來源之一）</li>
+          <li>院前環境幾乎不可能執行</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine">於是形成一個弔詭：醫院內的輸血越來越精緻，但<strong>最需要輸血的那群人（現場的大出血傷患）反而拿不到血</strong>。這個缺口，要等到下一場戰爭才被重新看見。</p>
+  </div>
+</section>
+
+<!-- 7 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">History ④ ─ 2003–2020</div>
+  <h2>伊拉克與阿富汗：鐘擺盪回來<span class="sub">Damage control resuscitation 與「行走血庫」</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div class="tl">
+        <div class="ev"><div class="yr">2003–</div><div class="tx"><strong>Walking blood bank（行走血庫）</strong>：在前線醫療設施抽取同僚的新鮮全血直接輸注，因為在戰場後送鏈上根本拿不到血小板。</div></div>
+        <div class="ev"><div class="yr">2007–</div><div class="tx"><strong>Damage control resuscitation</strong> 成形：許可性低血壓、限制晶體液、早期均衡輸血、早期止血、預防低體溫。</div></div>
+        <div class="ev"><div class="yr">2010–13</div><div class="tx">PROMMTT / PROPPR：確立<strong>均衡比例（1:1:1）</strong>優於紅血球為主的復甦 → 邏輯上直指「那不如直接用全血」。</div></div>
+        <div class="ev q"><div class="yr">2017</div><div class="tx"><strong>Shackelford, JAMA</strong>：阿富汗戰傷後送 502 人，院前輸血 / 早期輸血者<span class="hl">24 小時死亡風險降低 74%</span>、30 天存活改善。這是院前輸血最有力的觀察性證據。</div></div>
+        <div class="ev"><div class="yr">2018–</div><div class="tx">美國多個民間創傷體系與 EMS 開始常規攜帶 <strong>LTOWB</strong>；AABB 2024 標準納入全血。</div></div>
+      </div>
+      <div class="card amber">
+        <h3>為什麼是軍方一直在推？</h3>
+        <ul>
+          <li><strong>後送時間長</strong>：戰場、山區、離島，不是都會區的 10 分鐘</li>
+          <li><strong>血品供應脆弱</strong>：冷鏈、空運、電力都可能中斷</li>
+          <li><strong>單一產品的後勤價值</strong>：一種血袋、一條管路、一套流程，比三種產品好維持</li>
+        </ul>
+        <p class="fine" style="margin-top:.8rem">請把這三點記住——等一下講到台灣的戰傷佈局時，它們會<em>一模一樣</em>地再出現一次。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">EBM Update ─ 全景</div>
+  <h2>院前輸血的 RCT 地圖<span class="sub">請注意：這些試驗問的<strong>不是同一個問題</strong></span></h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>試驗 / 年</th><th>比較</th><th>N</th><th>主要結果</th><th>結論</th></tr></thead>
+      <tbody>
+        <tr><td><strong>COMBAT</strong> 2018<br><span class="fine">Denver 單中心, 地面</span></td><td>血漿 vs <strong>生理食鹽水</strong></td><td class="num">125<br><span class="fine">隨機 144</span></td><td>28 天死亡 15% vs 10%<br><span class="fine">P=0.37</span></td><td class="fine">無差異（<strong>都會短程</strong>，中位運送 19 min）<br><strong>因無效而提早終止</strong></td></tr>
+        <tr class="key"><td><strong>PAMPer</strong> 2018<br><span class="fine">直升機, 叢集隨機</span></td><td>解凍血漿 vs 標準治療</td><td class="num">501</td><td>30 天死亡 <strong>23.2% vs 33.0%</strong></td><td class="fine"><span class="hl2">血漿組顯著較低</span><br>差 −9.8 pp (−18.6 – −1.0), P=0.03</td></tr>
+        <tr><td><strong>PAMPer+COMBAT</strong><br>post hoc 2020</td><td>合併、依運送時間分層</td><td class="num">626</td><td>整體存活 <strong>HR 0.65</strong><br><span class="fine">(0.47–0.90), P=0.01</span></td><td class="fine">運送 <strong>&gt;20 分鐘</strong>時，標準治療組死亡上升（HR 2.12），血漿組沒有</td></tr>
+        <tr><td><strong>RePHILL</strong> 2022<br><span class="fine">UK, HEMS（ISS 中位 36）</span></td><td>PRBC+凍晶血漿 vs <strong>0.9% NaCl</strong></td><td class="num">432</td><td>死亡或乳酸清除不良<br>64% vs 65%</td><td class="fine">無差異（校正後差 −0.025%, P=0.996）<br><strong>因 COVID 提早結束收案</strong></td></tr>
+        <tr class="key"><td><strong>TOWAR</strong> 2026 ★<br><span class="fine">US, 44 空中基地</span></td><td><strong>全血 vs 成分</strong></td><td class="num">1020</td><td>30 天死亡 <strong>25.9% vs 20.5%</strong></td><td class="fine">全血<strong>未優於</strong>成分（aOR 1.24）</td></tr>
+        <tr class="key"><td><strong>SWiFT</strong> 2026<br><span class="fine">England, 10 空中救護</span></td><td><strong>全血 vs 成分</strong></td><td class="num">616</td><td>24h 死亡或大量輸血<br>48.7% vs 47.7%</td><td class="fine">全血<strong>未優於</strong>標準治療（RR 1.02）</td></tr>
+      </tbody>
+      <caption>★ = 今天主要討論的論文。注意最後兩列（2026）的比較組已經<strong>不是晶體液，而是血品</strong>——問題已經從「要不要給血」進化到「給哪一種血」。</caption>
+    </table>
+  </div>
+</section>
+
+<!-- 9 ─────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">EBM Update ─ 關鍵前提</div>
+  <h2>PAMPer 與 COMBAT：同年、反向、同一個答案<span class="sub">「時間」才是那個藏起來的變數</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card teal">
+        <div class="lbl">PAMPer（NEJM 2018）</div>
+        <h3>直升機、長程後送 → 有效</h3>
+        <ul class="tick">
+          <li>務實、多中心、<strong>叢集隨機</strong>；501 人（230 血漿 / 271 標準）</li>
+          <li>30 天死亡 <strong>23.2% vs 33.0%</strong><br>差 −9.8 pp（−18.6 – −1.0），P=0.03　<strong>NNT ≈ 10</strong></li>
+          <li>KM 曲線在<strong>第 3 小時</strong>就分開，持續到 30 天（P=0.02）</li>
+          <li>到院 PT ratio 較低（1.2 vs 1.3, P&lt;0.001）</li>
+          <li>9 個預先指定次族群效果一致（異質性 P=0.79）</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="lbl">COMBAT（Lancet 2018）</div>
+        <h3>都會地面、短程 → 無效</h3>
+        <ul class="cross">
+          <li>Denver Health <strong>單一中心</strong>、地面救護；對照組是<strong>生理食鹽水</strong></li>
+          <li>隨機 144 人，as-treated 125 人（65 / 60）</li>
+          <li>中位運送時間 <strong>19 min</strong>（對照 16 min）</li>
+          <li>28 天死亡 15% vs 10%，<strong>P=0.37</strong></li>
+          <li>收滿 150 之前<strong>因無效而終止</strong></li>
+        </ul>
+        <p class="fine" style="margin-top:.5rem">作者自己的結論：「在運送時間較長的環境，血品<em>可能</em>有益；但在都會區短程情境下，financial burden 不合理。」</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>2020 年合併 post-hoc（Pusateri et al., JAMA Surg；n=626）：</strong>整體血漿有存活益處 <strong>HR 0.65（0.47–0.90），P=0.01</strong>。關鍵在交互作用——<span class="hl">運送 &gt; 20 分鐘時，「標準治療組」死亡風險上升（HR 2.12, 1.05–4.30, P=0.04），而血漿組沒有（HR 0.78, 0.40–1.51）</span>。換句話說：<em>血漿不是讓病人變好，是擋住了長時間運送造成的惡化。</em></p>
+      <p style="margin-top:.5rem">→ 這對台灣的意義非常直接：<strong>院前輸血的效益，與你的後送時間成正比。</strong>台北市區可能看不出差別；<span class="hl">北海岸、平溪、烏來、離島、以及戰時道路中斷的情境，才是它真正的舞台。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 10 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">EBM Update ─ 為何回到全血</div>
+  <h2>低效價 O 型全血（LTOWB）<span class="sub">不是因為它比較有效，而是因為它比較「可行」</span></h2>
+  <div class="body">
+    <div class="c46">
+      <div class="card red">
+        <h3>什麼叫「低效價」？</h3>
+        <p>篩選 O 型捐血者中 <strong>anti-A / anti-B 抗體效價低於門檻</strong>者（TOWAR 採 <span class="hl">&lt; 1:256</span>），使其可作為「萬用血型」直接輸給任何人。</p>
+        <p class="fine" style="margin-top:.7rem">TOWAR 使用的全血保存期限 <strong>最長 21 天</strong>，每位病人最多 2 單位。</p>
+      </div>
+      <div class="card">
+        <h3>全血相對於 1:1:1 的六個實務優勢</h3>
+        <ol>
+          <li><strong>流程簡化</strong>：一袋、一條管路、一次核對</li>
+          <li><strong>抗凝劑/保存液攝入量下降</strong>（較少低血鈣）</li>
+          <li><strong>血液流動性佳</strong>，加壓輸注順暢</li>
+          <li><strong>運送條件與濃厚紅血球相同</strong>，冷鏈不用另建</li>
+          <li>相較單獨血小板<strong>保存期限長</strong>，浪費較少</li>
+          <li><strong>捐贈者暴露數下降</strong>（1 人 vs 3 人）</li>
+        </ol>
+      </div>
+    </div>
+    <p class="fine">觀察性研究（Brill 2022, Torres 2023/2024, Feeney 2024 等）多數顯示全血<strong>安全、且與較好結果相關</strong>；但觀察性研究會被 survivorship 與選擇偏差污染。<span class="hl">所以我們需要 RCT——這就是 TOWAR 的位置。</span></p>
+  </div>
+</section>
+
+<!-- 10b ───────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">EBM Update ─ TOWAR 之前</div>
+  <h2>全血的證據鏈：從可行性 → 觀察性 → RCT<span class="sub">注意這三篇的第一/通訊作者，幾乎都是同一群人（Pittsburgh 團隊）</span></h2>
+  <div class="body">
+    <div class="cols3">
+      <div class="card teal">
+        <div class="lbl">Step 1 ─ 可行性</div>
+        <h3>PPOWER 先導試驗<br><span class="fine">J Trauma Acute Care Surg 2022</span></h3>
+        <ul class="tick">
+          <li>單中心、叢集隨機，院前<strong>延續到院內</strong>都用 LTOWB</li>
+          <li>86 人（40 全血 / 46 標準），<strong>收到 77% 即提早停止</strong></li>
+          <li>28 天死亡 <strong>25.0% vs 26.1%（P=0.85）</strong>——本來就沒有檢力</li>
+          <li>24 小時<strong>紅血球用量較少</strong>（P&lt;0.01）、TEG 異常較少</li>
+          <li><strong>零輸血反應</strong></li>
+        </ul>
+        <p class="fine">結論就一句：<em>「可行、安全，值得做大型試驗」</em> → 這就是 TOWAR 的起點。</p>
+      </div>
+      <div class="card amber">
+        <div class="lbl">Step 2 ─ 觀察性</div>
+        <h3>SWAT 前瞻觀察研究<br><span class="fine">J Am Coll Surg 2023;237:206-19</span></h3>
+        <ul>
+          <li>7 家創傷中心、<strong>1,051 人</strong>出血性休克，&gt;70% 需大量輸血</li>
+          <li>主要結果：<strong>4 小時死亡</strong></li>
+          <li>傾向分數校正後<strong>整體無差異</strong>：RR 0.90（0.59–1.39），P=0.64</li>
+          <li><span class="hl">但在「院前預測死亡機率較高」的族群：4 小時死亡風險降 48%（RR 0.52, 0.32–0.87, P=0.01）、28 天降 30%（RR 0.70, 0.51–0.96, P=0.03）</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="lbl">Step 3 ─ 統合分析</div>
+        <h3>Morgan et al. 統合分析<br><span class="fine">Crit Care Med 2024;52:e390-404</span></h3>
+        <ul>
+          <li>1,297 篇篩出 <strong>24 篇</strong>；共 <strong>58,717 人</strong>（5,164 人用 LTOWB）</li>
+          <li>24 小時存活 <strong>RR 1.07（1.03–1.12）</strong></li>
+          <li>晚期存活 <strong>RR 1.05（1.01–1.09）</strong></li>
+          <li><strong>但：絕大多數是觀察性研究，全部評為中度偏差風險</strong></li>
+        </ul>
+        <p class="fine">效應量其實很小（RR 1.05–1.07），且完全可能來自選擇偏差。</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>這頁的意義：</strong>TOWAR 不是憑空出現的。它是為了驗證上面這一整串「看起來有效」的訊號而設計的——<span class="hl">而 SWAT 的第一作者 Sperry，正是 TOWAR 的第一作者</span>。研究者用一個 RCT 去檢驗自己觀察性研究的結論，結果沒被證實。這是科學該有的樣子。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">TOWAR ─ 設計</div>
+  <h2>TOWAR 試驗：問題與方法<span class="sub">Type O Whole Blood and Assessment of Age during Prehospital Resuscitation</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div class="card">
+        <h3>PICO</h3>
+        <table>
+          <tbody>
+            <tr><td style="width:5.2em;color:var(--dim)"><strong>P</strong></td><td>成人創傷、院前出現<strong>出血性休克</strong>而需輸血者</td></tr>
+            <tr><td style="color:var(--dim)"><strong>I</strong></td><td>院前輸注最多 <strong>2 單位低效價 O 型全血</strong></td></tr>
+            <tr><td style="color:var(--dim)"><strong>C</strong></td><td>院前輸注<strong>血品成分</strong>（紅血球、血漿或兩者，依現場常規）</td></tr>
+            <tr><td style="color:var(--dim)"><strong>O</strong></td><td>主要：<strong>隨機分派後 30 天內全因死亡</strong></td></tr>
+          </tbody>
+        </table>
+        <h3 style="margin-top:1rem">設計要點</h3>
+        <ul>
+          <li>務實型（pragmatic）、多中心、<strong>第 3 期、叢集隨機</strong></li>
+          <li>隨機單位是<strong>空中救護基地</strong>（44 個），以 <strong>2:1</strong> 分派、每<strong>一個月</strong>為一個區塊輪換</li>
+          <li>2022/5 – 2025/6，11 家創傷中心；開放標籤，但<strong>結果評估者盲化</strong></li>
+          <li>依 exception from informed consent 執行（社區公告 + 事後告知）</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card amber">
+          <h3>為什麼用叢集隨機？</h3>
+          <p class="fine">因為血品是<strong>放在直升機上</strong>的，不可能對每個病人即時抽籤決定機上帶什麼。以基地/月份為單位輪換可以<strong>減少血品浪費</strong>、簡化配送後勤，並讓保存天數的觀察性子研究有足夠檢力。</p>
+          <p class="fine" style="margin-top:.6rem"><strong>代價：</strong>無法遮盲、交叉汙染難免、且 ICC 若被低估會影響檢力。（實際 ICC = 0.01，叢集效應可忽略。）</p>
+        </div>
+        <div class="card teal" style="margin-top:1rem">
+          <h3>納入條件</h3>
+          <p class="fine">至少一次 <strong>SBP ≤ 90 mmHg 且 HR ≥ 108</strong>；<strong>或</strong> 嚴重低血壓 <strong>SBP ≤ 70</strong>（不需心跳快）。可為現場或轉診急診轉送。</p>
+          <p class="fine" style="margin-top:.5rem"><strong>主要排除：</strong>&lt;18 或 &gt;90 歲、站姿平地跌倒、溺水、上吊、燒傷、懷孕、受刑人、<strong>創傷性心跳停止</strong>、穿刺性腦傷、無法建立 IV/IO、拒絕參與。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">TOWAR ─ 病人流</div>
+  <h2>收案與族群：這是一群非常重的病人<span class="sub">篩檢 9,554 人 → 分析 993 人</span></h2>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><div class="n w">9,554</div><div class="k">評估合格性</div></div>
+      <div class="stat"><div class="n w">1,098</div><div class="k">符合納入條件</div></div>
+      <div class="stat"><div class="n">1,020</div><div class="k">隨機分派（44 基地）</div></div>
+      <div class="stat"><div class="n">715 / 305</div><div class="k">全血組 / 成分組</div></div>
+      <div class="stat"><div class="n t">695 / 298</div><div class="k">修正 ITT 分析</div></div>
+    </div>
+    <div class="cols">
+      <div class="card">
+        <h3>基線特徵（兩組相似）</h3>
+        <ul>
+          <li>男性 <strong>73.5%</strong>，平均年齡 ~45 歲</li>
+          <li>鈍傷 ~<strong>79%</strong>；車禍為最常見機轉（~66%）</li>
+          <li>中位 <strong>ISS 25</strong>（IQR 14–34）→ 遠超「重大創傷」門檻</li>
+          <li>創傷性腦傷 <strong>39.7%</strong>；院前插管 <strong>52.5%</strong></li>
+          <li><strong>70.8%</strong> 自事故現場轉送</li>
+          <li>院前 TXA 使用 41.8% vs 37.5%；止血帶 ~13–16%</li>
+          <li>24 小時內手術介入 <strong>62.2%</strong></li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h3>兩個不平衡的變項（已校正）</h3>
+        <p>全血組的 <strong>創傷性腦傷（41.4% vs 35.7%）</strong> 與 <strong>院前插管（54.4% vs 48.4%）</strong> 均較高 → 模型中以固定效應校正，另加入收案月份。</p>
+        <p class="fine" style="margin-top:.7rem"><strong>臨床解讀：</strong>全血組先天「病得更重」一點。這在看到全血組數字較差時必須放在心上——但也提醒我們，殘餘干擾（residual confounding）無法完全排除。</p>
+        <p class="fine" style="margin-top:.6rem"><strong>方案遵從度 94.5%</strong>；但<span class="hl">全血組有 31.6% 額外或改用了成分血品</span>，成分組亦有 8.5% 收到全血 → <em>交叉會把兩組往中間拉</em>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 13 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">TOWAR ─ 主要結果</div>
+  <h2>30 天死亡率：全血並未更好<span class="sub">而且數字方向是「反過來」的</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card red" style="text-align:center">
+        <div class="lbl">全血組（n=695）</div>
+        <div style="font-size:clamp(46px,5vw,76px);font-weight:800;color:var(--red);line-height:1.05">25.9%</div>
+        <p class="fine">180 例死亡 / 30 天</p>
+      </div>
+      <div class="card" style="text-align:center;border-color:rgba(90,169,230,.45)">
+        <div class="lbl">成分組（n=298）</div>
+        <div style="font-size:clamp(46px,5vw,76px);font-weight:800;color:var(--blue);line-height:1.05">20.5%</div>
+        <p class="fine">61 例死亡 / 30 天</p>
+      </div>
+    </div>
+    <div class="card amber">
+      <h3>校正後勝算比　aOR 1.24（95% CI 0.87 – 1.76）　P = 0.24</h3>
+      <ul>
+        <li>Kaplan–Meier 曲線幾乎重疊：log-rank χ² = 2.18, <strong>P = 0.13</strong></li>
+        <li>Donner–Klar 檢定組間差 0.082, <strong>P = 0.08</strong>（校正叢集後無顯著差異）</li>
+        <li>ICC = <strong>0.01</strong>（95% CI −0.02 – 0.04）→ 基地間差異可忽略</li>
+        <li>全體收案者 30 天死亡率 <strong>24.3%</strong></li>
+      </ul>
+    </div>
+    <div class="note">
+      <p><strong>怎麼講這個結果才誠實：</strong>這是一個 <em>superiority trial 的失敗</em>，不是一個 <em>「全血有害」的證明</em>。CI 上界 1.76 確實不能排除傷害，但下界 0.87 也不能排除益處——<span class="hl">這條 CI 太寬，真正的訊息是「我們仍然不知道，但至少沒看到明顯優勢」。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 14 ────────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 次要結果</div>
+  <h2>次要結果一覽<span class="sub">沒有任何一項顯示全血佔優勢；早期死亡的訊號值得注意</span></h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>結果</th><th class="num">全血 (n=695)</th><th class="num">成分 (n=298)</th><th>效應估計 (95% CI)</th></tr></thead>
+      <tbody>
+        <tr class="key"><td>30 天死亡</td><td class="num">25.9%</td><td class="num">20.5%</td><td>aOR 1.24 (0.87–1.76)</td></tr>
+        <tr><td>3 小時死亡</td><td class="num">9.4%</td><td class="num">5.4%</td><td>1.72 (0.96–3.08)</td></tr>
+        <tr><td>6 小時死亡</td><td class="num">11.2%</td><td class="num">7.0%</td><td>1.55 (0.92–2.62)</td></tr>
+        <tr><td>24 小時死亡</td><td class="num">14.4%</td><td class="num">11.1%</td><td>1.25 (0.81–1.93)</td></tr>
+        <tr><td>住院死亡</td><td class="num">24.8%</td><td class="num">19.5%</td><td>1.25 (0.87–1.78)</td></tr>
+        <tr><td>死於出血 / 大量失血</td><td class="num">9.0%</td><td class="num">7.8%</td><td>1.08 (0.65–1.81)</td></tr>
+        <tr><td>死於腦傷 / 腦疝</td><td class="num">9.0%</td><td class="num">7.8%</td><td>0.98 (0.56–1.71)</td></tr>
+      </tbody>
+      <caption>次要結果<strong>未校正多重比較</strong>，CI 不可當作假說檢定使用。</caption>
+    </table>
+    <div class="note">
+      <p><strong>注意這個梯度：</strong>3 小時（1.72）→ 6 小時（1.55）→ 24 小時（1.25）→ 30 天（1.24）。<span class="hl">越早期，點估計對全血越不利</span>，但沒有一項達統計顯著，且<em>死因分佈（出血、腦傷）兩組幾乎相同</em>——最可能的解釋仍是基線腦傷與插管比例較高的殘餘影響。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14b ───────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 次要結果（續）</div>
+  <h2>止血、併發症與凝血指標<span class="sub">一個很有意思的分離：生化有效，臨床無效</span></h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>結果</th><th class="num">全血 (n=695)</th><th class="num">成分 (n=298)</th><th>效應估計 (95% CI)</th></tr></thead>
+      <tbody>
+        <tr><td>達到止血（到院 4 小時內）</td><td class="num">89.2%</td><td class="num">93.6%</td><td>aOR 0.61 (0.35–1.04)</td></tr>
+        <tr><td>止血中位時間</td><td class="num">60 min</td><td class="num">60 min</td><td>0.98 (0.88–1.09)</td></tr>
+        <tr><td>多重器官衰竭</td><td class="num">14.1%</td><td class="num">12.4%</td><td>1.12 (0.74–1.69)</td></tr>
+        <tr><td>院內感染</td><td class="num">8.2%</td><td class="num">8.7%</td><td>0.92 (0.55–1.54)</td></tr>
+        <tr><td>ARDS</td><td class="num">39.3%</td><td class="num">40.6%</td><td>0.87 (0.66–1.17)</td></tr>
+        <tr class="key"><td>到院 1 小時內 INR &gt; 1.5</td><td class="num">20.3%</td><td class="num">26.4%</td><td>0.69 (0.46–1.02)</td></tr>
+        <tr><td>到院 1 小時內 PT 中位數</td><td class="num">14.2 sec</td><td class="num">14.5 sec</td><td>β 0.05 (−0.68–0.78)</td></tr>
+      </tbody>
+      <caption>24 小時內各血品輸注單位數、不良事件與嚴重不良事件發生率，兩組均相似。</caption>
+    </table>
+    <div class="note">
+      <p><span class="hl2">全血組的凝血功能異常反而較少（INR &gt; 1.5：20.3% vs 26.4%）</span>——完全符合「一袋血保留完整凝血因子與血小板」的生理預期。</p>
+      <p style="margin-top:.4rem"><strong>但它沒有轉換成存活益處。</strong>這是 EBM 的經典教訓：<em>替代指標（surrogate）改善 ≠ 病人結果改善</em>。若當年只看 INR 就下結論，我們會得到完全相反的建議。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 15 ────────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 次族群</div>
+  <h2>七個預先指定的次族群：沒有找到「全血受益族群」</h2>
+  <div class="body">
+    <div class="forest">
+      <div class="row hd"><div>次族群</div><div class="num">全血</div><div class="num">成分</div><div>OR (95% CI)</div><div class="num">估計值</div></div>
+      <div class="row tot"><div>整體</div><div class="num">25.9%</div><div class="num">20.5%</div>
+        <div class="bar"><div class="ci" style="left:34%;width:35%"></div><div class="pt" style="left:50.9%"></div></div><div class="num">1.24 (0.87–1.76)</div></div>
+      <div class="row"><div>頭頸 AIS &gt;2　有</div><div class="num">31.9%</div><div class="num">33.3%</div>
+        <div class="bar"><div class="ci" style="left:24%;width:40%"></div><div class="pt" style="left:47.8%"></div></div><div class="num">0.92 (0.55–1.54)</div></div>
+      <div class="row"><div>頭頸 AIS &gt;2　無</div><div class="num">18.0%</div><div class="num">14.0%</div>
+        <div class="bar"><div class="ci" style="left:29%;width:42%"></div><div class="pt" style="left:50.3%"></div></div><div class="num">1.20 (0.71–2.04)</div></div>
+      <div class="row"><div>自現場轉送</div><div class="num">27.1%</div><div class="num">22.2%</div>
+        <div class="bar"><div class="ci" style="left:34%;width:36%"></div><div class="pt" style="left:51.2%"></div></div><div class="num">1.26 (0.84–1.89)</div></div>
+      <div class="row"><div>自他院轉送</div><div class="num">23.0%</div><div class="num">16.3%</div>
+        <div class="bar"><div class="ci" style="left:25%;width:47%"></div><div class="pt" style="left:50.7%"></div></div><div class="num">1.21 (0.60–2.46)</div></div>
+      <div class="row"><div><strong>嚴重低血壓（≤70）有</strong></div><div class="num">34.5%</div><div class="num">24.1%</div>
+        <div class="bar"><div class="ci" style="left:41%;width:31%"></div><div class="pt" style="left:54.1%"></div></div><div class="num">1.59 (1.02–2.47)</div></div>
+      <div class="row"><div>嚴重低血壓　無</div><div class="num">15.7%</div><div class="num">15.9%</div>
+        <div class="bar"><div class="ci" style="left:22%;width:40%"></div><div class="pt" style="left:46.1%"></div></div><div class="num">0.84 (0.47–1.51)</div></div>
+      <div class="row"><div>年齡 18–55</div><div class="num">18.7%</div><div class="num">12.6%</div>
+        <div class="bar"><div class="ci" style="left:33%;width:41%"></div><div class="pt" style="left:53.1%"></div></div><div class="num">1.50 (0.86–2.61)</div></div>
+      <div class="row"><div>年齡 ≥56</div><div class="num">40.7%</div><div class="num">35.7%</div>
+        <div class="bar"><div class="ci" style="left:29%;width:39%"></div><div class="pt" style="left:51.8%"></div></div><div class="num">1.31 (0.78–2.17)</div></div>
+    </div>
+    <div class="axis"><span>0.25　← 全血較好　（30 天死亡 OR）</span><span>1.0</span><span>成分較好 →　4.0</span></div>
+    <div class="note">
+      <p>唯一 CI 未跨過 1 者為<strong>嚴重低血壓（SBP ≤ 70）</strong>OR 1.59（1.02–2.47）——<span class="hl">未校正多重比較、且該族群基線最重，不可據此宣稱全血有害。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 16 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">TOWAR ─ 子研究</div>
+  <h2>保存天數子研究：舊血不比新血差<span class="sub">這對台灣的後勤規劃，可能比主要結果更重要</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div>
+        <div class="cols">
+          <div class="card" style="text-align:center;border-color:rgba(95,191,106,.45)">
+            <div class="lbl">保存 15–21 天（n=210）</div>
+            <div style="font-size:clamp(38px,4vw,60px);font-weight:800;color:var(--green)">27.1%</div>
+            <p class="fine">57 例死亡</p>
+          </div>
+          <div class="card" style="text-align:center;border-color:rgba(62,198,180,.45)">
+            <div class="lbl">保存 1–14 天（n=443）</div>
+            <div style="font-size:clamp(38px,4vw,60px);font-weight:800;color:var(--teal)">26.4%</div>
+            <p class="fine">117 例死亡</p>
+          </div>
+        </div>
+        <div class="card amber" style="margin-top:1rem">
+          <h3>aOR 0.99（95% CI 0.74 – 1.32）</h3>
+          <ul>
+            <li>KM 曲線幾乎完全重疊：log-rank χ² = 0.01, <strong>P = 0.93</strong></li>
+            <li>七個次族群、其他次要結果、不良事件<strong>均無差異</strong></li>
+            <li>以 generalized boosted model 算傾向分數 + IPW 校正</li>
+          </ul>
+          <p class="fine">注意：這是<strong>觀察性</strong>子研究（非隨機分派保存天數），僅限於全血組內部比較。</p>
+        </div>
+      </div>
+      <div class="card red">
+        <h3>為什麼這件事這麼重要？</h3>
+        <p>院前輸血最大的實務障礙不是「有沒有效」，而是<strong>血會不會被浪費掉</strong>。</p>
+        <ul style="margin-top:.7rem">
+          <li>若只有「新鮮血」才有效 → 每袋血都要高頻輪替，成本與廢棄率暴增</li>
+          <li>既然 <strong>21 天內的全血結果相同</strong> → 可以放心採用 San Antonio 式的<span class="hl">「先上救護車、兩週未用就轉回創傷中心使用」</span>輪替策略，廢棄率可壓到約 <strong>2%</strong></li>
+        </ul>
+        <p class="fine" style="margin-top:.8rem">對台灣（血品供應本來就緊、O 型常告急）而言，<em>這是讓院前輸血從「示範」走向「常規」的關鍵一塊拼圖</em>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">TOWAR ─ 批判性評讀</div>
+  <h2>優點與限制：這篇該怎麼被引用<span class="sub">Journal club 的重點在這一頁</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card teal">
+        <h3>優點</h3>
+        <ul class="tick">
+          <li><strong>務實設計</strong>：寬鬆納入條件、真實院前環境 → 外推性好</li>
+          <li>樣本數大（1,020），為此領域最大的院前全血 RCT 之一</li>
+          <li>2:1 分派讓保存天數子研究有足夠檢力</li>
+          <li>結果評估者盲化；多種遺漏值敏感度分析結果一致</li>
+          <li>ICC 極低 → 叢集設計未造成實質偏差</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h3>限制（作者自述 + 我們的補充）</h3>
+        <ul class="cross">
+          <li><strong>無法遮盲</strong> → 治療偏差（treatment bias）無法排除</li>
+          <li><strong>血品交叉嚴重</strong>：全血組 31.6% 也收到成分血 → 稀釋真實效應，偏向無差異</li>
+          <li><strong>院前輸血量偏低</strong>（最多 2 單位），相對於院內用量微不足道 → 干預強度不足</li>
+          <li>成分組許多人同時拿到 RBC + 血漿 → 兩組其實<em>都</em>接近均衡復甦</li>
+          <li><strong>檢力假設過於樂觀</strong>：設計時假設可偵測 26%→16%（10 個百分點）的巨大差異 → 型 II 錯誤風險高</li>
+          <li>隨機分派前已輸血者未被排除</li>
+          <li>凝血/血小板功能檢測遺漏值多，可能有 spectrum bias</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>一句話總結：</strong>這是一篇設計良好但<em>檢力不足、干預被稀釋</em>的陰性 superiority 試驗。它足以讓我們說「<span class="hl">全血不是院前復甦的萬靈丹</span>」，但不足以說「全血不該用」——尤其當全血的主要論證從來是<strong>後勤，而非療效</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 18 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">EBM Update ─ 2026 的另一半</div>
+  <h2>SWiFT：大西洋另一岸給出同樣的答案<span class="sub">Smith JE, Cardigan R, et al. NEJM 2026（phase 3 SWiFT trial）</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div class="card">
+        <h3>設計與結果</h3>
+        <ul>
+          <li>英格蘭 <strong>10 個空中救護服務</strong>，2022/12 – 2024/9</li>
+          <li>務實、第 3 期、未遮盲、<strong>優越性</strong>試驗（個人隨機）</li>
+          <li>隨機 942 人 → 分析 <strong>616 人</strong>（全血 314 / 標準治療 302）</li>
+          <li>全血最多 2 單位 vs 標準治療（紅血球 + 血漿各最多 2 單位）</li>
+          <li>主要結果：<strong>24 小時內死亡或大量輸血（≥10 單位）</strong>之複合結果</li>
+        </ul>
+        <div class="cols" style="margin-top:1rem">
+          <div class="card red" style="text-align:center"><div class="lbl">全血</div><div style="font-size:clamp(34px,3.4vw,50px);font-weight:800;color:var(--red)">48.7%</div></div>
+          <div class="card" style="text-align:center;border-color:rgba(90,169,230,.45)"><div class="lbl">標準治療</div><div style="font-size:clamp(34px,3.4vw,50px);font-weight:800;color:var(--blue)">47.7%</div></div>
+        </div>
+        <p style="margin-top:.8rem"><strong>RR 1.02（95% CI 0.80 – 1.31），P = 0.84</strong>；6 小時至 90 天各時間點全血組死亡率<strong>相等或略高</strong>。</p>
+      </div>
+      <div>
+        <div class="card amber">
+          <h3>安全性</h3>
+          <ul>
+            <li>全血組 <strong>PT 延長比例較高</strong>（40.7% vs 30.5%）</li>
+            <li>嚴重不良事件反而<strong>標準治療組較多</strong>（37 vs 31）</li>
+            <li>血栓事件兩組相似</li>
+          </ul>
+          <p class="fine">→ 整體安全性相當，沒有安全性的理由禁止全血。</p>
+        </div>
+        <div class="card teal" style="margin-top:1rem">
+          <h3>兩篇獨立試驗、兩種隨機方法、同一個結論</h3>
+          <p class="fine">TOWAR（美國，叢集隨機，30 天死亡）與 SWiFT（英國，個人隨機，24 小時複合結果）在<strong>設計上互相彌補彼此的弱點</strong>，卻得到一致的陰性結果。</p>
+          <p class="fine" style="margin-top:.5rem"><strong>這種一致性，比任何單一試驗都更有說服力：</strong>院前全血在存活率上<span class="hl">不優於</span>均衡成分輸血。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Synthesis ①</div>
+  <h2>為什麼觀察性研究說有效，RCT 卻說沒有？<span class="sub">這是本題最值得學的方法學課題</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card amber">
+        <h3>最可能的解釋：<span class="hl">病人選擇</span></h3>
+        <p>觀察性研究（SWAT、各家 registry、統合分析）納入的病人<strong>普遍更重</strong>——SWAT 有超過 70% 需要大量輸血。而 SWAT 自己就發現：<span class="hl">益處只出現在「院前預測死亡機率高」的那一群</span>。</p>
+        <p style="margin-top:.6rem">TOWAR 與 SWiFT 是務實試驗，納入條件寬（一次低血壓＋心跳快就收），因此收進了<strong>大量不會死於出血的病人</strong>——這些人不管給全血或成分，結果都一樣。</p>
+        <p class="fine" style="margin-top:.6rem">→ 真實效應若只存在於最重的 20–30%，那麼在整體族群上就會被<em>稀釋到看不見</em>。</p>
+      </div>
+      <div class="card">
+        <h3>其他必須同時考慮的解釋</h3>
+        <ul>
+          <li><strong>觀察性研究的存活者偏差</strong>：能撐到收到全血的人本來就活得久（immortal time bias）</li>
+          <li><strong>指標混淆</strong>：會準備全血的機構，往往也是止血流程、TXA、保溫做得最好的機構</li>
+          <li><strong>干預強度不足</strong>：TOWAR / SWiFT 都只給 ≤ 2 單位，相對於院內用量微不足道</li>
+          <li><strong>交叉汙染</strong>：TOWAR 全血組 31.6% 也拿到成分血，兩組實質趨同</li>
+          <li><strong>就是真的沒有差別</strong>——這仍然是最簡潔的解釋，不該被排除</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>臨床決策上怎麼辦？</strong>SWAT 的高風險族群訊號<em>值得產生假說，但不足以指導實務</em>。真正的下一題是 OpenEvidence 自己也提出的那一句：<span class="hl">「究竟哪一群創傷病人最可能從院前全血受益？」</span>——目前沒有人有答案，需要前瞻性設計來回答。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Synthesis ②</div>
+  <h2>把兩個問題徹底分開<span class="sub">這是今天最容易被誤讀的地方</span></h2>
+  <div class="body">
+    <div class="two-up">
+      <div>
+        <div class="lbl" style="color:var(--teal)">問題 A</div>
+        <h3>到院前「要不要給血」？</h3>
+        <p class="fine" style="margin-bottom:.7rem">比較組 = 晶體液 / 無輸血</p>
+        <ul class="tick">
+          <li>觀察性與戰傷資料：<strong>強烈支持</strong>（Shackelford 2017：24 小時死亡 ↓74%）</li>
+          <li>PAMPer：長程後送<strong>有存活益處</strong></li>
+          <li>COMBAT / RePHILL：短程都會<strong>看不到益處</strong></li>
+          <li>合併 post hoc：<strong>運送 &gt; 20 分鐘</strong>才受益</li>
+        </ul>
+        <p style="margin-top:.7rem"><strong>答案：</strong><span class="hl2">在後送時間長的情境下，該給。</span></p>
+      </div>
+      <div>
+        <div class="lbl" style="color:var(--blue)">問題 B</div>
+        <h3>要給「全血」還是「成分」？</h3>
+        <p class="fine" style="margin-bottom:.7rem">比較組 = 血品成分（兩邊都有血）</p>
+        <ul class="cross">
+          <li>TOWAR 2026：30 天死亡 aOR 1.24，<strong>無優勢</strong></li>
+          <li>SWiFT 2026：24h 複合結果 RR 1.02，<strong>無優勢</strong></li>
+          <li>安全性：兩者<strong>相當</strong></li>
+          <li>全血保存 21 天內：結果<strong>相同</strong></li>
+        </ul>
+        <p style="margin-top:.7rem"><strong>答案：</strong><span style="color:var(--blue);font-weight:700">療效上等價；要選全血，理由是後勤，不是療效。</span></p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>臨床上最常見的錯誤引用：</strong>「NEJM 說院前輸血沒用啦。」——不對。TOWAR 與 SWiFT 的兩組<em>都</em>接受了院前輸血。<span class="hl">沒有任何一篇 2026 年的試驗把「院前給血」和「什麼都不給」拿來比較。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 20 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Bottom Line</div>
+  <h2>七個帶回臨床的結論<span class="sub">給主治、住院醫師、醫學生的不同層次</span></h2>
+  <div class="body">
+    <ol style="font-size:clamp(18px,1.15vw,22px)">
+      <li><strong>院前輸血本身仍然是對的方向</strong>——尤其在後送時間 &gt; 20 分鐘、脫困困難、山區與離島的情境。</li>
+      <li><strong>全血不是「更強的血」。</strong>它與均衡成分輸血在存活率上等價（TOWAR + SWiFT，兩篇獨立 RCT 一致）。</li>
+      <li><strong>但全血在後勤上明顯更簡單</strong>：一袋血、一條管路、一種庫存、一種冷鏈、較少捐贈者暴露、較少抗凝劑負荷。<span class="hl">在資源受限或戰時，簡單就是可行性。</span></li>
+      <li><strong>保存 21 天內的全血一樣好用</strong> → 可採「先前推、未用轉回醫院」的輪替策略，把廢棄率壓低，這是制度能長期運轉的前提。</li>
+      <li><strong>全血確實改善凝血指標</strong>（INR &gt; 1.5 較少），但生化改善未轉換為存活——提醒我們別用替代指標下結論。</li>
+      <li><strong>不要因為這兩篇陰性結果就否定台灣正在建立的院前輸血能力。</strong>台灣要練的是問題 A（把血送到現場的能力），而 TOWAR 只回答了問題 B。</li>
+      <li><strong>臨床上優先順序不變：</strong>止血 &gt; 輸血。止血帶、骨盆固定帶、TXA、限制晶體液、保溫、補鈣——這些沒做好，任何血品都救不回來。</li>
+    </ol>
+  </div>
+</section>
+
+<!-- 21 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">臺灣 ─ 為什麼這是國防議題</div>
+  <h2>院前輸血：台灣面對戰傷的關鍵佈局<span class="sub">不是為了「多救一個車禍傷者」，是為了那一天</span></h2>
+  <div class="body">
+    <div class="cols3">
+      <div class="card red">
+        <h3>① 後送時間會變長</h3>
+        <p class="fine">戰時橋樑、道路、隧道中斷；空域不安全，直升機不一定飛得起來。都會區的「10 分鐘到院」假設<strong>會瞬間失效</strong>。</p>
+        <p class="fine" style="margin-top:.6rem">→ 這正是 PAMPer 證明院前輸血<em>有效</em>的那個情境。</p>
+      </div>
+      <div class="card amber">
+        <h3>② 傷患型態會改變</h3>
+        <p class="fine">爆震傷、穿刺傷、多發性肢體出血，<strong>可代償時間極短</strong>。大量傷患事件下，醫院端的 MTP 一定會被排隊。</p>
+        <p class="fine" style="margin-top:.6rem">→ 復甦必須<strong>前推到現場</strong>，否則來不及。</p>
+      </div>
+      <div class="card teal">
+        <h3>③ 血品後勤是命脈</h3>
+        <p class="fine">台灣血庫平時就緊（O 型曾僅剩 4.7 天庫存）。戰時捐血中斷、冷鏈與電力受威脅。國防部已規劃<strong>設立軍方捐血機構</strong>並與衛福部、消防、地方衛生局建立「戰時全民醫療系統運作機制」。</p>
+        <p class="fine" style="margin-top:.6rem">→ <strong>單一產品（LTOWB）的後勤優勢在此被放大到最大。</strong></p>
+      </div>
+    </div>
+    <div class="quote">
+      這個能力不能在戰爭開始那一天才開始建。冷鏈、法規、給付、演練、人員信心——每一項都需要好幾年。<strong>我們現在做的每一例，都是在提前繳學費。</strong>
+    </div>
+  </div>
+</section>
+
+<!-- 22 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">臺灣 ─ 現況</div>
+  <h2>台灣推動院前輸血的五大挑戰<span class="sub">《台灣急診醫學通訊》：到院前輸血現況與挑戰</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div>
+        <ol>
+          <li><strong>血品來源不穩定</strong>——平時庫存已緊，難以撥出前推部位</li>
+          <li><strong>存放設備成本高昂</strong>——車載/機載冷藏、溫度監測、稽核紀錄</li>
+          <li><strong>直升機運輸方式受限</strong>——空勤總隊任務排序、天候、夜航</li>
+          <li><strong>健保未給付、法規存在缺口</strong>——誰能執行？血袋離開血庫後的責任歸屬？廢棄由誰承擔？</li>
+          <li><strong>醫院端 LTOWB 庫存與使用習慣未建立</strong>——沒有院內需求，就沒有輪替出口，就必然浪費</li>
+        </ol>
+        <div class="note" style="margin-top:.9rem">
+          <p>第 4、5 點才是真正的瓶頸。<strong>這是制度題，不是醫學題。</strong></p>
+        </div>
+      </div>
+      <div class="card teal">
+        <h3>可借鏡：美國 San Antonio 模式</h3>
+        <ul class="tick">
+          <li>LTOWB <strong>優先供應救護單位</strong>（不是先給醫院）</li>
+          <li><strong>兩週未使用即轉回創傷中心</strong>院內使用</li>
+          <li>血品廢棄率控制在約 <strong>2%</strong></li>
+          <li>強調「<strong>黃金 15 分鐘</strong>」與「行動血庫（mobile blood bank）」概念</li>
+        </ul>
+        <p class="fine" style="margin-top:.8rem">歐洲策略分歧：部分偏好紅血球或血漿，部分推行全血——<strong>沒有唯一正解，但都有一套自己的輪替機制。</strong></p>
+        <p class="fine" style="margin-top:.6rem">TOWAR 的保存天數子研究，正好為這套「先前推、再回收」的模式提供了證據支撐。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Reality Check</div>
+  <h2>把血放上救護車之後，真實世界長什麼樣？<span class="sub">美國某多機構 EMS 系統的實地運作數據（Transfusion 2026）</span></h2>
+  <div class="body">
+    <div class="stats">
+      <div class="stat"><div class="n t">21.3 min</div><div class="k">派遣 → 開始輸血<br><span class="fine">中位數</span></div></div>
+      <div class="stat"><div class="n t">36.6 min</div><div class="k">派遣 → 抵達急診<br><span class="fine">中位數</span></div></div>
+      <div class="stat"><div class="n a">74%</div><div class="k">血品實際使用率</div></div>
+      <div class="stat"><div class="n">26%</div><div class="k">導入初期<strong>廢棄率</strong></div></div>
+    </div>
+    <div class="cols">
+      <div class="card teal">
+        <h3>好消息</h3>
+        <ul class="tick">
+          <li>流程遵從度高，制度真的跑得起來</li>
+          <li>從初評到抵達急診，<strong>收縮壓上升、shock index 下降</strong>——生理上確實有反應</li>
+          <li>血在 21 分鐘內就進得去，遠早於多數病人到院的時間</li>
+        </ul>
+      </div>
+      <div class="card red">
+        <h3>壞消息，也是台灣的功課</h3>
+        <p><strong>導入初期廢棄率 26%</strong>——與 San Antonio 成熟系統的 ~2% 差了一個量級。</p>
+        <p class="fine" style="margin-top:.6rem">差別在哪？<span class="hl">不是技術，是「輪替出口」</span>：有沒有一家醫院願意常規使用被送回來的血。沒有出口，前推部署就等於燒血。</p>
+        <p class="fine" style="margin-top:.6rem">→ 這也正是台灣五大挑戰中第 5 點（醫院端 LTOWB 庫存與使用習慣未建立）為什麼是<em>真正的瓶頸</em>。TOWAR 的 21 天結果替我們解決了「舊血能不能用」的疑慮，剩下的是<strong>制度願不願意接手</strong>。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">臺灣 ─ 新北，全國領頭羊</div>
+  <h2>2025 / 7 / 23　萬里<span class="sub">全國第一例到院前輸血</span></h2>
+  <div class="body">
+    <div class="c64">
+      <div class="card red">
+        <h3>案例經過</h3>
+        <ul>
+          <li>萬里區<strong>砂石車與客運碰撞</strong>；砂石車司機胸部以下受困駕駛座</li>
+          <li>生命徵象不穩：<strong>低血壓、心跳快</strong>；預估脫困時間<strong>超過 1 小時</strong></li>
+          <li>啟動<strong>雙軌派遣</strong>：一車前往<strong>亞東紀念醫院</strong>接醫療團隊，另一車前往<strong>新北市立聯合醫院三重院區</strong>取血品與藥品</li>
+          <li>推估內出血 <strong>&gt; 1,500 c.c.</strong></li>
+          <li><span class="hl">病人仍受困車內時，現場即給予止痛、穩定循環，並完成輸血</span>（2 單位減白紅血球濃厚液）</li>
+          <li>同步後送<strong>三軍總醫院</strong>；病人成功救回</li>
+        </ul>
+      </div>
+      <div>
+        <div class="card amber">
+          <h3>誠實的技術註記</h3>
+          <p class="fine">新北這一例使用的是 <strong>減白紅血球濃厚液（leukoreduced PRBC）</strong>，<em>不是</em> TOWAR 所用的低效價 O 型全血。</p>
+          <p class="fine" style="margin-top:.6rem">→ 台灣目前突破的是<strong>問題 A（把血送到現場）</strong>；<strong>問題 B（要不要改用 LTOWB）</strong>是下一階段的政策選擇。TOWAR 告訴我們：<span class="hl2">不急著為了「療效」轉向全血，但可以為了「後勤」規劃它。</span></p>
+        </div>
+        <div class="card" style="margin-top:1rem">
+          <h3>三年，卡在哪裡？</h3>
+          <p class="fine">三軍總醫院急診醫師<strong>白豐誠</strong>領導此制度發展，指出最大障礙<em>不在技術，而在「敢不敢做」</em>——血品極其珍貴，離開冷鏈若未使用即報廢。是第一線指揮官的果決，突破了這道心理門檻。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">臺灣 ─ 新北體系</div>
+  <h2>不是一次奇蹟，是一套制度<span class="sub">新北市「雙軌派遣」行動救援網絡</span></h2>
+  <div class="body">
+    <div class="tl">
+      <div class="ev q"><div class="yr">114 / 06</div><div class="tx">新北市推動<strong>「雙軌派遣」</strong>機制上路：把過去單一消防單位的送醫流程，升級為<span class="hl">「醫療主動出擊」</span>的行動救援網絡。<span>一車赴現場、一車接醫療團隊或取血品。</span></div></div>
+      <div class="ev"><div class="yr">114 / 07 / 23</div><div class="tx"><strong>萬里砂石車 × 客運事故 ─ 全國第一例到院前輸血</strong>。新北消防特搜大隊（慈福、秀峰、德音分隊）以油壓器材拆解車體，醫療團隊在受困中即完成輸血。</div></div>
+      <div class="ev"><div class="yr">115 / 01 / 29</div><div class="tx">與<strong>亞東紀念醫院</strong>合作全國首創 <strong>Doctor Car 專案</strong>：涵蓋<span>新莊、板橋、樹林、土城、三鶯</span>地區的到院前心跳停止案件，每次派遣<strong>一位急診醫師 + 兩位緊急醫療救護技術員</strong>。</div></div>
+      <div class="ev"><div class="yr">115 / 03 / 12</div><div class="tx"><strong>瑞芳台 2 線連環車禍</strong>：啟動雙軌派遣，醫師於現場評估並處置疑似內出血與開放性骨折病人。</div></div>
+      <div class="ev"><div class="yr">其他</div><div class="tx">八里案例順利脫困；<strong>林口連環車禍</strong>雖於脫困前即開始輸血，傷勢過重仍於送醫途中失去生命跡象——<span>制度誠實地記錄了失敗，這才是可以改進的制度。</span></div></div>
+    </div>
+    <div class="note">
+      <p><strong>下一個要優化的瓶頸（團隊自己點出來的）：</strong>在北海岸等遠距離現場，<em>醫療人員通常比血品更早抵達</em>。縮短血品運送時間，是新北下一階段的功課。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 25 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">臺灣 ─ 現場實務</div>
+  <h2>從「只能陪著他」到「把醫院推到車禍現場」<span class="sub">院前團隊現在帶得出去的東西</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <div class="lbl">從前</div>
+        <h3>消防員能做的</h3>
+        <ul>
+          <li>基本止血、固定、脫困</li>
+          <li>四級止痛藥</li>
+          <li>精神鼓勵與陪伴</li>
+        </ul>
+        <p class="fine">對一個受困一小時、內出血 1,500 c.c. 的病人，這幾乎等於在旁邊看著他變壞。</p>
+      </div>
+      <div class="card red">
+        <div class="lbl">現在</div>
+        <h3>雙軌派遣帶到現場的</h3>
+        <ul class="tick">
+          <li><strong>血品輸注</strong>（現場、受困中即可執行）</li>
+          <li><strong>強效鎮痛（嗎啡類）</strong></li>
+          <li><strong>床邊超音波</strong>評估</li>
+          <li>必要時<strong>緊急截肢</strong>等進階處置</li>
+          <li>醫師現場決策：後送醫院、啟動 MTP 前置通知</li>
+        </ul>
+      </div>
+    </div>
+    <div class="quote">
+      現場運作像 F1 賽車維修區——各司其職、零浪費。
+      <cite>— 專科護理師 陳昱璁（描述新北現場團隊分工）</cite>
+    </div>
+    <div class="quote" style="border-color:var(--amber)">
+      我們無法決定生死，但要用盡一切方式，把有機會的患者「暴力地」拉回來。
+      <cite>— 三軍總醫院急診醫師 白豐誠</cite>
+    </div>
+  </div>
+</section>
+
+<!-- 26 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">給新北急診同仁</div>
+  <h2>身為新北的急診醫師，你該熟悉的六件事<span class="sub">明天上班就可能用到</span></h2>
+  <div class="body">
+    <ol style="font-size:clamp(18px,1.12vw,21px)">
+      <li><strong>知道你的醫院在這張網裡的角色。</strong>你們是「派醫療團隊出去的醫院」、「供血的醫院」、還是「接重傷患的創傷中心」？三種角色的準備完全不同。</li>
+      <li><strong>接到雙軌派遣的電話時，你要在幾分鐘內給答案。</strong>誰出勤、帶什麼、血從哪來、由誰簽收——這些不該在事發當下才討論。</li>
+      <li><strong>血品離開血庫的那一刻，冷鏈與紀錄就是你的責任。</strong>溫度監控、時間戳記、未使用血品的回收路徑，要能事後被稽核。</li>
+      <li><strong>把院前資訊當成 MTP 的啟動訊號。</strong>現場已輸 2 單位、推估失血 1,500 c.c. → 病人到院前，手術室、血庫、輸血科、影像都該已經動起來。</li>
+      <li><strong>別忘了那些比輸血更基本的事：</strong>止血帶位置與時間、骨盆固定帶、TXA（3 小時內）、限制晶體液、主動保溫、<em>輸血後補鈣</em>。TOWAR 中兩組都只輸 ≤ 2 單位——真正決定生死的仍是止血。</li>
+      <li><strong>參與檢討，包含失敗的案例。</strong>林口那一例救不回來，但它讓下一例更有機會。<span class="hl">台灣的院前輸血現在正在寫自己的資料庫，而新北是主要作者。</span></li>
+    </ol>
+  </div>
+</section>
+
+<!-- 27 ────────────────────────────────────────── -->
+<section class="slide">
+  <div class="kicker">Take Home</div>
+  <h2>三句話結束<span class="sub"></span></h2>
+  <div class="body" style="justify-content:center;gap:1.6rem">
+    <div class="card red">
+      <div class="lbl">關於這篇論文</div>
+      <p class="big-q">院前<strong>全血</strong>並未比均衡成分輸血降低 30 天死亡率（aOR 1.24, 95% CI 0.87–1.76），SWiFT 亦然。要選全血，理由是<span class="hl">後勤</span>，不是療效；而 21 天內的保存天數不影響結果。</p>
+    </div>
+    <div class="card teal">
+      <div class="lbl">關於院前輸血</div>
+      <p class="big-q">「要不要給血」和「給哪一種血」是兩個問題。前者在<span class="hl2">後送時間長</span>的情境下答案是肯定的——而台灣有很多這樣的地方。</p>
+    </div>
+    <div class="card amber">
+      <div class="lbl">關於我們自己</div>
+      <p class="big-q">院前輸血是台灣戰傷醫療佈局中<strong>已經走了好幾年</strong>的一步。<span class="hl">新北是全國領頭羊，全國第一例在這裡完成。</span>身為新北的急診醫師，這不是別人的議題。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 28 ────────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">Appendix ─ 資料查核</div>
+  <h2>本簡報數字的交叉驗證紀錄<span class="sub">每一個數字都回到原始摘要核對過；不一致處如實標示</span></h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>來源 / 試驗</th><th>關鍵數字</th><th>原始出處核對</th><th>結果</th></tr></thead>
+      <tbody>
+        <tr><td><strong>TOWAR</strong></td><td>25.9% vs 20.5%，aOR 1.24 (0.87–1.76)</td><td>NEJM 2026;394:2317-28 全文</td><td class="hl2">一致 ✓</td></tr>
+        <tr class="key"><td>TOWAR 收案數</td><td>某彙整工具寫「randomized 993」</td><td>原文：<strong>隨機 1,020</strong>，修正 ITT <strong>分析 993</strong></td><td class="hl">已更正 ⚠</td></tr>
+        <tr><td><strong>SWiFT</strong></td><td>48.7% vs 47.7%，RR 1.02 (0.80–1.31), P=0.84</td><td>NEJM 2026, DOI 10.1056/NEJMoa2516043</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>PAMPer</strong></td><td>23.2% vs 33.0%，−9.8 pp, P=0.03</td><td>NEJM 2018;379:315-26</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>COMBAT</strong></td><td>15% vs 10%, P=0.37；運送 19 min</td><td>Lancet 2018（as-treated 125 / 隨機 144）</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>post-hoc 2020</strong></td><td>HR 0.65 (0.47–0.90)；&gt;20 min 交互作用</td><td>JAMA Surg 2020;155:e195085（n=626）</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>RePHILL</strong></td><td>64% vs 65%，校正後差 −0.025%, P=0.996</td><td>Lancet Haematol 2022（因 COVID 提早結束）</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>PPOWER</strong></td><td>28 天 25.0% vs 26.1%, P=0.85；n=86</td><td>J Trauma Acute Care Surg 2022;92:839-47</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>SWAT</strong></td><td>RR 0.90 (0.59–1.39)；高風險 RR 0.52 (0.32–0.87)</td><td>J Am Coll Surg 2023;237:206-19（另補 28 天 RR 0.70）</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td><strong>統合分析</strong></td><td>24 篇 / 58,717 人；RR 1.07、1.05</td><td>Crit Care Med 2024;52:e390-404</td><td class="hl2">一致 ✓</td></tr>
+        <tr><td>實地運作數據</td><td>21.3 / 36.6 min；74% 使用、26% 廢棄</td><td>Transfusion 2026（僅單一來源，未取得全文）</td><td class="hl">待確認 ○</td></tr>
+        <tr><td>台灣 / 新北案例</td><td>2025-07-23 萬里、2 單位減白紅血球濃厚液</td><td>台灣急診醫學會通訊、新新聞、康健（媒體報導）</td><td class="hl">非同儕審查 ○</td></tr>
+      </tbody>
+      <caption>文獻查核使用 PubMed。標示 ○ 者為單一或非同儕審查來源，引用時請註明。</caption>
+    </table>
+  </div>
+</section>
+
+<!-- Refs 1 ───────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">References ①</div>
+  <h2>參考資料：主要論文與關鍵試驗<span class="sub">數字均經 PubMed 檢索比對原始摘要（見前一頁查核表）</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h3 style="color:var(--red)">主要論文</h3>
+        <ul class="fine">
+          <li>Sperry JL, Guyette FX, Cotton BA, et al. Prehospital resuscitation with type O whole blood for trauma and hemorrhage (<strong>TOWAR</strong>). <strong>N Engl J Med 2026;394:2317-28.</strong> doi:10.1056/NEJMoa2602167；NCT04684719</li>
+        </ul>
+        <h3 style="color:var(--red);margin-top:.8rem">院前輸血 RCT</h3>
+        <ul class="fine">
+          <li>Smith JE, Cardigan R, Sanderson B, et al. (<strong>SWiFT</strong>). N Engl J Med 2026. doi:10.1056/NEJMoa2516043；ISRCTN23657907</li>
+          <li>Sperry JL, Guyette FX, Brown JB, et al. (<strong>PAMPer</strong>). N Engl J Med 2018;379:315-26. doi:10.1056/NEJMoa1802345</li>
+          <li>Moore HB, Moore EE, Chapman MP, et al. (<strong>COMBAT</strong>). Lancet 2018. doi:10.1016/S0140-6736(18)31553-8</li>
+          <li>Pusateri AE, Moore EE, Moore HB, et al. PAMPer + COMBAT <strong>post hoc</strong>（運送 &gt;20 min）. JAMA Surg 2020;155:e195085. doi:10.1001/jamasurg.2019.5085</li>
+          <li>Crombie N, et al. (<strong>RePHILL</strong>). Lancet Haematol 2022;9:e250-61. doi:10.1016/S2352-3026(22)00040-0</li>
+          <li>Guyette FX, Zenati M, Triulzi DJ, et al. (<strong>PPOWER</strong> pilot). J Trauma Acute Care Surg 2022;92:839-47. doi:10.1097/TA.0000000000003551</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--teal)">觀察性與統合分析</h3>
+        <ul class="fine">
+          <li>Sperry JL, Cotton BA, Luther JF, et al. Whole blood resuscitation and survival in patients with elevated probability of mortality (<strong>SWAT</strong>). J Am Coll Surg 2023;237:206-19. doi:10.1097/XCS.0000000000000708</li>
+          <li>Morgan KM, Abou Khalil E, Feeney EV, et al. Efficacy of LTOWB vs component therapy: <strong>meta-analysis</strong>. Crit Care Med 2024;52:e390-404. doi:10.1097/CCM.0000000000006244</li>
+          <li>Shackelford SA, et al. Prehospital blood transfusion during medical evacuation in Afghanistan. <strong>JAMA 2017;318:1581-91</strong></li>
+        </ul>
+        <h3 style="color:var(--amber);margin-top:.8rem">綜論、指引與運作</h3>
+        <ul class="fine">
+          <li>Torres CM, Jenkins D, Sakran JV. Whole-blood transfusion from empiricism to evidence. JAMA Surg 2026（評論）</li>
+          <li>Alvarez C, Briggs S, Nielsen J, et al. Prehospital LTOWB in a multi-agency civilian EMS. Transfusion 2026</li>
+          <li>Levy MJ, et al. Prehospital blood transfusion coalition clinical practice guideline. Trauma Surg Acute Care Open 2025;10:e001931</li>
+          <li>AABB. Standards for Blood Banks and Transfusion Services, 2024</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Refs 2 ───────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">References ②</div>
+  <h2>參考資料：台灣資料與歷史<span class="sub">台灣部分多為媒體與學會通訊，非同儕審查來源</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div>
+        <h3 style="color:var(--teal)">台灣 / 新北</h3>
+        <ul class="fine">
+          <li>《到院前輸血現況與挑戰》，台灣急診醫學會電子月刊<br>sem.org.tw/Ejournal/Detail/724</li>
+          <li>〈新北雙軌救援網〉，新新聞 / 風傳媒<br>new7.storm.mg/article/5494688</li>
+          <li>〈【院前輸血】3 年等待、一袋血的勇氣：台灣急救團隊如何把醫院推進車禍現場？〉，康健雜誌 93053</li>
+          <li>OpenEvidence：Prehospital Type O Blood<br>openevidence.com/ask/201c6a01-4e46-44e4-98ea-8570c6104c77</li>
+          <li>國防部規劃設立軍方捐血機構、建立戰時全民醫療系統運作機制（自由時報軍武頻道報導）</li>
+        </ul>
+      </div>
+      <div>
+        <h3 style="color:var(--amber)">歷史</h3>
+        <ul class="fine">
+          <li>Pelis K. Blood transfusion in World War I: the roles of L.B. Robertson and O.H. Robertson</li>
+          <li>Bethune 移動輸血隊（西班牙內戰 1936–39）。Can Bull Med Hist 2012;29:69</li>
+          <li>Back to the Future: Whole Blood Resuscitation of the Severely Injured Trauma Patient. Shock 2021</li>
+        </ul>
+        <div class="note" style="margin-top:.9rem">
+          <p><strong>操作：</strong>← → 翻頁　•　<strong>F</strong> 全螢幕　•　Home / End 首末頁　•　可直接列印或另存 PDF</p>
+        </div>
+        <div class="card" style="margin-top:.9rem">
+          <p class="fine">本簡報為院內教學用途整理。臨床決策請回到原始文獻與所屬機構之流程規範。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="prog" id="prog"></div>
+<div class="nav">
+  <button id="pv" title="上一頁 (←)">‹</button>
+  <button id="nx" title="下一頁 (→)">›</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+function render(){
+  slides.forEach((s,k)=>s.classList.toggle('on',k===i));
+  const s=slides[i];
+  if(!s.querySelector('.foot')){
+    const f=document.createElement('div');
+    f.className='foot';
+    f.innerHTML='<span>到院前輸血 ─ TOWAR trial & 新北戰傷佈局</span><span>'+(i+1)+' / '+slides.length+'</span>';
+    s.appendChild(f);
+  }
+  document.getElementById('prog').style.width=((i+1)/slides.length*100)+'%';
+  s.scrollTop=0;
+  location.hash='s'+(i+1);
+}
+function go(n){i=Math.max(0,Math.min(slides.length-1,n));render()}
+document.addEventListener('keydown',e=>{
+  if(['ArrowRight','PageDown',' ','Enter'].includes(e.key)){e.preventDefault();go(i+1)}
+  else if(['ArrowLeft','PageUp','Backspace'].includes(e.key)){e.preventDefault();go(i-1)}
+  else if(e.key==='Home')go(0); else if(e.key==='End')go(slides.length-1);
+  else if(e.key==='f'||e.key==='F'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}
+});
+document.getElementById('nx').onclick=()=>go(i+1);
+document.getElementById('pv').onclick=()=>go(i-1);
+const m=location.hash.match(/^#s(\d+)$/);
+if(m)i=Math.min(slides.length-1,Math.max(0,+m[1]-1));
+render();
+</script>
+</body>
+</html>
