@@ -133,6 +133,32 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
 .nav button{background:var(--panel2);color:var(--ink);border:1px solid var(--line);border-radius:9px;
   width:2.1rem;height:2.1rem;font-size:19px;cursor:pointer;line-height:1}
 .nav button:hover{border-color:var(--red);color:#fff}
+/* links */
+a{color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(90,169,230,.4)}
+a:hover{color:#9fd0f5;border-bottom-color:#9fd0f5}
+a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid rgba(90,169,230,.5);
+  border-radius:999px;padding:.28rem .85rem;font-size:18px;margin:.25rem .3rem .25rem 0}
+
+/* 生活化比喻 callout */
+.analogy{display:flex;gap:.75rem;align-items:flex-start;
+  background:linear-gradient(90deg,rgba(240,168,54,.14),rgba(240,168,54,.02));
+  border-left:3px solid var(--amber);border-radius:0 10px 10px 0;padding:.6rem .95rem}
+.analogy .emo{font-size:26px;line-height:1.15;flex-shrink:0}
+.analogy p{font-size:18px;line-height:1.45}
+.analogy b{color:var(--amber)}
+.analogy .tag{font-size:18px;font-weight:800;color:var(--amber);letter-spacing:.06em;margin-right:.4em}
+
+/* 原始流程圖 */
+.chart{background:#fff;border-radius:10px;padding:.4rem;display:flex;align-items:center;justify-content:center}
+.chart img{max-width:100%;max-height:66vh;object-fit:contain;display:block}
+
+/* 血齡時間軸圖解 */
+.ageline{position:relative;margin:.5rem 0 .2rem}
+.ageline .track{position:relative;height:42px;border-radius:8px;overflow:hidden;background:var(--panel2);border:1px solid var(--line)}
+.ageline .seg{position:absolute;top:0;bottom:0;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.ageline .ticks{display:flex;justify-content:space-between;font-size:18px;color:var(--dim);margin-top:.25rem}
+.ageline .cap{font-size:18px;color:var(--muted);margin-top:.15rem}
+
 /* compact variant for data-dense slides (keeps 18px floor) */
 .slide.dense h2{margin-bottom:.65rem}
 .slide.dense .body{gap:.7rem}
@@ -231,6 +257,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         <p class="fine" style="margin-top:.8rem">院前輸血要做的，就是把中間那一段「只有晶體液」的空窗填起來。</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="emo">🚗</div>
+      <p><span class="tag">比喻</span>致命四角像<b>四個同時在漏氣的輪胎</b>——你只補其中一個，車還是跑不動。晶體液補得越猛，等於<b>一邊補胎一邊在其他三個輪胎上戳洞</b>：血液被稀釋、體溫更低、酸中毒更重。</p>
+    </div>
   </div>
 </section>
 
@@ -255,6 +285,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         </ul>
         <p class="fine" style="margin-top:.9rem">認得出來嗎？<strong>O 型、預先備血、冷鏈、前推部署</strong>——這正是 2026 年 TOWAR 與新北雙軌派遣在做的同一件事。109 年後我們仍在解同一道題。</p>
       </div>
+    </div>
+    <div class="analogy">
+      <div class="emo">🧊</div>
+      <p><span class="tag">比喻</span>1917 年那個「彈藥箱＋木屑＋冰塊」，本質上就是人類第一個<b>外送保溫袋</b>。差別在於：外送晚 30 分鐘只是麵糊了，這個晚 30 分鐘，人就沒了。</p>
     </div>
   </div>
 </section>
@@ -314,6 +348,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
       </div>
     </div>
     <p class="fine">於是形成一個弔詭：醫院內的輸血越來越精緻，但<strong>最需要輸血的那群人（現場的大出血傷患）反而拿不到血</strong>。這個缺口，要等到下一場戰爭才被重新看見。</p>
+    <div class="analogy">
+      <div class="emo">🍊</div>
+      <p><span class="tag">比喻</span>把全血拆成紅血球、血漿、血小板，就像把<b>一杯現榨柳橙汁分離成果肉、水、纖維、糖</b>——分開保存效率極高、各有各的用途。但等你真的口渴時再兌回去，<b>總量一樣，味道就是回不來了</b>。</p>
+    </div>
   </div>
 </section>
 
@@ -390,12 +428,16 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
           <li>28 天死亡 15% vs 10%，<strong>P=0.37</strong></li>
           <li>收滿 150 之前<strong>因無效而終止</strong></li>
         </ul>
-        <p class="fine" style="margin-top:.5rem">作者自己的結論：「在運送時間較長的環境，血品<em>可能</em>有益；但在都會區短程情境下，financial burden 不合理。」</p>
+        <p class="fine" style="margin-top:.4rem">作者結論：長程環境血品<em>可能</em>有益，都會短程則成本不合理。</p>
       </div>
     </div>
     <div class="note">
       <p><strong>2020 年合併 post-hoc（Pusateri et al., JAMA Surg；n=626）：</strong>整體血漿有存活益處 <strong>HR 0.65（0.47–0.90），P=0.01</strong>。關鍵在交互作用——<span class="hl">運送 &gt; 20 分鐘時，「標準治療組」死亡風險上升（HR 2.12, 1.05–4.30, P=0.04），而血漿組沒有（HR 0.78, 0.40–1.51）</span>。換句話說：<em>血漿不是讓病人變好，是擋住了長時間運送造成的惡化。</em></p>
       <p style="margin-top:.5rem">→ 這對台灣的意義非常直接：<strong>院前輸血的效益，與你的後送時間成正比。</strong>台北市區可能看不出差別；<span class="hl">北海岸、平溪、烏來、離島、以及戰時道路中斷的情境，才是它真正的舞台。</span></p>
+    </div>
+    <div class="analogy">
+      <div class="emo">🍜</div>
+      <p><span class="tag">比喻</span>同一碗泡麵，<b>走路 3 分鐘到家</b>不需要保溫袋；<b>外送 40 分鐘</b>就非要不可。PAMPer 和 COMBAT 給的是同一種「保溫袋」，只是一個送 40 分鐘、一個送 19 分鐘——<b>結論不同，不是因為血漿變了，是因為路程變了</b>。</p>
     </div>
   </div>
 </section>
@@ -424,6 +466,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
       </div>
     </div>
     <p class="fine">觀察性研究（Brill 2022, Torres 2023/2024, Feeney 2024 等）多數顯示全血<strong>安全、且與較好結果相關</strong>；但觀察性研究會被 survivorship 與選擇偏差污染。<span class="hl">所以我們需要 RCT——這就是 TOWAR 的位置。</span></p>
+    <div class="analogy">
+      <div class="emo">🔌</div>
+      <p><span class="tag">比喻</span>O 型血就是血庫界的 <b>Type-C 萬用充電線</b>——不用先問對方是什麼牌子的手機，插上就能用。「低效價」則是確保這條線<b>不會反過來電到病人</b>。</p>
+    </div>
   </div>
 </section>
 
@@ -526,7 +572,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
           <li><strong>ICC = 0</strong>：基地完全不影響結果 → 每個病人都是獨立的一筆資訊</li>
           <li><strong>ICC 越大</strong>：同基地病人結果越相似（同一組人員、同一套習慣、同一家後送醫院）</li>
         </ul>
-        <p class="fine">生活化版本：問卷只訪問 10 個家庭、每家 5 人，你<strong>不能</strong>當成 50 個獨立樣本——同一家人的答案本來就很像。TOWAR 的「家庭」就是<strong>空中救護基地</strong>。</p>
+        <div class="analogy" style="margin-top:.5rem">
+          <div class="emo">👨‍👩‍👧‍👦</div>
+          <p><span class="tag">比喻</span>問卷只訪了 <b>10 個家庭、每家 5 人</b>，你不能宣稱自己有 50 份獨立樣本——同一家人的答案本來就很像。TOWAR 的「家庭」就是<b>空中救護基地</b>：同一組人員、同一套習慣、同一家後送醫院。</p>
+        </div>
       </div>
       <div class="card amber">
         <h3>② 於是「有效樣本數」會縮水</h3>
@@ -764,6 +813,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         <p class="fine" style="margin-top:.8rem">對台灣（血品供應本來就緊、O 型常告急）而言，<em>這是讓院前輸血從「示範」走向「常規」的關鍵一塊拼圖</em>。</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="emo">🥛</div>
+      <p><span class="tag">比喻</span>這就像發現<b>「開封第 3 天的鮮奶」和「第 18 天的鮮奶」泡出來的咖啡一樣好喝</b>。聽起來只是冷知識，但對開咖啡店的人來說是<b>生死攸關的成本問題</b>——你終於敢一次進貨了。</p>
+    </div>
   </div>
 </section>
 
@@ -792,12 +845,16 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
           <li>成分組許多人同時拿到 RBC + 血漿 → 兩組其實<em>都</em>接近均衡復甦</li>
           <li><strong>檢力假設過於樂觀</strong>：設計時假設可偵測 26%→16%（10 個百分點）的巨大差異 → 型 II 錯誤風險高</li>
           <li>隨機分派前已輸血者未被排除</li>
-          <li>凝血/血小板功能檢測遺漏值多，可能有 spectrum bias</li>
+          
         </ul>
       </div>
     </div>
     <div class="note">
       <p><strong>一句話總結：</strong>這是一篇設計良好但<em>檢力不足、干預被稀釋</em>的陰性 superiority 試驗。它足以讓我們說「<span class="hl">全血不是院前復甦的萬靈丹</span>」，但不足以說「全血不該用」——尤其當全血的主要論證從來是<strong>後勤，而非療效</strong>。</p>
+    </div>
+    <div class="analogy">
+      <div class="emo">🥤</div>
+      <p><span class="tag">比喻</span>交叉汙染的殺傷力，像<b>可樂 vs 雪碧的盲測，結果雙方都偷喝了對方半杯</b>。最後測出「兩者沒差」——但你其實不知道那是因為真的沒差，還是因為兩杯根本已經混成同一杯。</p>
     </div>
   </div>
 </section>
@@ -868,6 +925,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
     </div>
     <div class="note">
       <p><strong>臨床決策上怎麼辦？</strong>SWAT 的高風險族群訊號<em>值得產生假說，但不足以指導實務</em>。真正的下一題是：<span class="hl">「究竟哪一群創傷病人最可能從院前全血受益？」</span>——目前沒有人有答案，需要前瞻性設計來回答。</p>
+    </div>
+    <div class="analogy">
+      <div class="emo">✈️</div>
+      <p><span class="tag">比喻</span>觀察性研究像在問<b>「坐商務艙的人是不是比較長壽？」</b>——是，但那是因為坐得起的人本來就過得比較好。RCT 則是<b>抽籤決定誰坐商務艙</b>：一抽下去，那些說不清的差異就散掉了，結果也就常常沒那麼漂亮。</p>
     </div>
   </div>
 </section>
@@ -1014,6 +1075,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         <p class="fine" style="margin-top:.6rem">→ 這也正是台灣五大挑戰中第 5 點（醫院端 LTOWB 庫存與使用習慣未建立）為什麼是<em>真正的瓶頸</em>。TOWAR 的 21 天結果替我們解決了「舊血能不能用」的疑慮，剩下的是<strong>制度願不願意接手</strong>。</p>
       </div>
     </div>
+    <div class="analogy">
+      <div class="emo">🗑️</div>
+      <p><span class="tag">比喻</span>導入初期 26% 的廢棄率，等於<b>你叫了 4 份便當、丟掉 1 份</b>。San Antonio 壓到 2% 靠的不是更會省，而是<b>找到了願意接手吃掉的人</b>——沒有醫院願意用回收的血，前推部署就只是在燒別人捐的血。</p>
+    </div>
   </div>
 </section>
 
@@ -1149,6 +1214,10 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
     <div class="note">
       <p><strong>血品核銷（註 7）：</strong>後送院所與發血院所相同 → 交回空血袋、備血檢體、申請單、輸血反應通知單、治療紀錄表；不同院所 → 由原發血血庫與捐血中心執行<strong>血品調動</strong>。<span class="hl">未使用血品：溫度裝置顯示意外回溫 → 報廢；未回溫 → 依各院退血作業處理。</span>相關文件至少保存 <strong>7 年</strong>。</p>
     </div>
+    <div class="analogy">
+      <div class="emo">❄️</div>
+      <p><span class="tag">比喻</span>血品是<b>全世界最難搞的外送品項</b>：全程 1–6°C、要貼溫度貼紙、要拍照上傳、送到還要兩個人一起核對收件人。而且它<b>不能點「不用餐具」</b>——退冰一次，整袋報銷。</p>
+    </div>
   </div>
 </section>
 
@@ -1171,6 +1240,87 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
     <div class="note">
       <p><strong>文件與交接：</strong>醫護人員應於送醫途中填寫「新北市政府消防局輸血反應通知單」（輸血反應症狀、處理狀況欄位），到院時與接收醫院交接；脫困後陪同送至適當醫院，接續 <strong>G6 車內照護流程</strong>。</p>
       <p class="fine" style="margin-top:.4rem">身為接收醫院的急診醫師：<span class="hl">病人到院時，這張通知單就是你判斷「他剛剛發生過什麼」的唯一線索——記得主動要。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 原始流程圖 U1 ─────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">原始流程圖 ─ U1</div>
+  <h2>U1 嚴重創傷受困傷病患－醫院雙軌派遣流程<span class="sub">新北市政府消防局緊急傷病患作業程序　<strong>原書 p.154</strong></span></h2>
+  <div class="body">
+    <div class="c46">
+      <div class="chart"><img src="sop/p154.webp" alt="U1 嚴重創傷受困傷病患－醫院雙軌派遣流程 原始流程圖（原書 p.154）"></div>
+      <div>
+        <div class="card red">
+          <h3>看流程圖要抓的三個決策點</h3>
+          <ul>
+            <li><strong>方框 2</strong>「需長時間脫困（註1）」——這是整條流程的<strong>總開關</strong>。答「否」直接跳到 G6 車內照護。</li>
+            <li><strong>方框 3</strong> 指揮中心一次通報四件事：醫院急診部整備、<strong>三重院區備藥品／血品</strong>、醫療組領取、衛生局報備支援。</li>
+            <li><strong>方框 6</strong>「需現場執行進階醫療處置（註5）」——註5 才是輸血、止痛、現場截肢的實際內容。</li>
+          </ul>
+        </div>
+        <div class="analogy" style="margin-top:.8rem">
+          <div class="emo">🚚</div>
+          <p><span class="tag">比喻</span>整張圖其實是一份<b>「醫院外送單」</b>：方框 2 決定要不要下單、方框 3 是把餐點（人＋藥＋血）備齊、方框 4 是叫車去接，最後<b>外送的不是餐，是一間小型急診室</b>。</p>
+        </div>
+        <a class="srcbtn" href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p154" target="_blank">📖 線上看 U1 原文 p.154</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 原始流程圖 U2 ─────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">原始流程圖 ─ U2</div>
+  <h2>U2 嚴重創傷緊急輸血流程<span class="sub">新北市政府消防局緊急傷病患作業程序　<strong>原書 p.170</strong></span></h2>
+  <div class="body">
+    <div class="c46">
+      <div class="chart"><img src="sop/p170.webp" alt="U2 嚴重創傷緊急輸血流程 原始流程圖（原書 p.170）"></div>
+      <div>
+        <div class="card amber">
+          <h3>注意這條流程「卡了三道關」</h3>
+          <ul>
+            <li><strong>方框 2</strong> 傷情符合適應症（註1 = Trauma ABC ≧2）→ 否則不領血</li>
+            <li><strong>方框 4</strong> 到場後<strong>醫師再確認一次</strong>適應症 → 否則不輸</li>
+            <li><strong>方框 5</strong> <strong>確認溫度記錄裝置符合標準</strong>（註3）→ 否則不輸</li>
+          </ul>
+          <p class="fine" style="margin-top:.5rem">方框 8 才是真正輸注：<strong>4U O 型 LPRBC + 2U AB 型 FFP</strong>。方框 10 若出現輸血反應 → 轉入 <strong>U3</strong>。</p>
+        </div>
+        <div class="analogy" style="margin-top:.8rem">
+          <div class="emo">✈️</div>
+          <p><span class="tag">比喻</span>三道關就像<b>登機前的三次查驗</b>：櫃檯查票、登機門查證件、空橋前再刷一次。麻煩，但血袋一旦輸錯或退冰，<b>是沒有「不好意思重來一次」的</b>。</p>
+        </div>
+        <a class="srcbtn" href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p170" target="_blank">📖 線上看 U2 原文 p.170</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 原始流程圖 U3 ─────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">原始流程圖 ─ U3</div>
+  <h2>U3 急性輸血反應處理流程<span class="sub">新北市政府消防局緊急傷病患作業程序　<strong>原書 p.176</strong></span></h2>
+  <div class="body">
+    <div class="c46">
+      <div class="chart"><img src="sop/p176.webp" alt="U3 急性輸血反應處理流程 原始流程圖（原書 p.176）"></div>
+      <div>
+        <div class="card teal">
+          <h3>這張圖短，但順序不能錯</h3>
+          <ol>
+            <li><strong>立即停止輸血</strong>，以生理食鹽水沖洗靜脈通路</li>
+            <li>確認生命徵象</li>
+            <li>視嚴重度，依現場醫師判斷處置（註2）<br><span class="fine">115 年草稿改為：<strong>聯絡線上醫療指導醫師</strong></span></li>
+            <li>填寫輸血反應通知單（註3）</li>
+            <li>脫困後陪同送至適當醫院 → <strong>G6 車內照護流程</strong></li>
+          </ol>
+        </div>
+        <div class="analogy" style="margin-top:.8rem">
+          <div class="emo">🔌</div>
+          <p><span class="tag">比喻</span>就像<b>插座冒煙時的反應順序</b>——先拔插頭，再看火勢，最後才決定要不要叫消防隊。<b>「先停輸血」永遠排在「想清楚是哪一種反應」前面</b>，因為想清楚要時間，而血還在滴。</p>
+        </div>
+        <a class="srcbtn" href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p176" target="_blank">📖 線上看 U3 原文 p.176</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1201,7 +1351,7 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         </div>
       </div>
     </div>
-    <p class="fine">資料來源：新北市 EMTP SOP 113 年定本 × 115 年修訂草稿之非官方對照整理（limzijiang.github.io/ntpc-emtp-sop-2024/updates.html）。<strong>草稿尚未定稿，臨床請以正式公告為準。</strong></p>
+    <p class="fine">資料來源：<a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/" target="_blank">新北市 EMTP SOP 113 年定本線上版</a> × <a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/updates.html" target="_blank">115 年修訂草稿更新摘要</a>（非官方對照整理）。<strong>草稿尚未定稿，臨床請以正式公告為準。</strong></p>
   </div>
 </section>
 
@@ -1214,11 +1364,11 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
       <div class="card teal">
         <h3>全新 U4：血品領取 / 接收流程</h3>
         <ul>
-          <li><strong>觸發</strong>：存量 &lt; 2 單位，或血齡達輪轉（14 日）/ 報廢（35 日）</li>
-          <li>初級（存血）單位向<strong>台北捐血中心</strong>領血；次級單位於<strong>血齡 14 日後輪轉接收</strong></li>
+          <li><strong>觸發</strong>：存量 &lt; 2 單位，或血齡達 14 日輪轉 / 35 日報廢</li>
+          <li>初級單位向<strong>台北捐血中心</strong>領血；次級單位於<strong>血齡 14 日後接收</strong></li>
           <li>規格：<strong>低效價 O 型陽性全血（LTOWB）2 單位</strong>，全程 1–6°C</li>
-          <li>查核鏈：文件 → 血袋資訊 → 外觀 → 溫度 → 冰箱功能 → 簽收；異常即通報血庫</li>
-          <li>新增「血品監管紀錄表」（1–14 天／15–35 天各一張）</li>
+          <li>查核鏈：文件→血袋→外觀→溫度→冰箱→簽收；並新增「血品監管紀錄表」</li>
+          
         </ul>
       </div>
       <div class="card teal">
@@ -1226,12 +1376,28 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
         <ul>
           <li><strong>每日點班檢核</strong>：溫度 1–6°C？冰箱功能正常？庫存 &gt; 2U？</li>
           <li>血齡 <strong>14 天</strong> → 走 U4 <strong>輪轉</strong>給次級單位</li>
-          <li>血齡 <strong>35 天</strong> → <strong>報廢</strong>（依感染性廢棄物程序，送台北捐血中心完成）</li>
-          <li>冰箱異常：取出所有血品移至<strong>醫療級溫控運輸箱</strong>備援</li>
+          <li>血齡 <strong>35 天</strong> → <strong>報廢</strong>（感染性廢棄物程序，送台北捐血中心）</li>
+          <li>冰箱異常：血品移至<strong>醫療級溫控運輸箱</strong>備援</li>
         </ul>
       </div>
     </div>
-    <p class="fine">資料來源：新北市 EMTP SOP 113 年定本 × 115 年修訂草稿之非官方對照整理（limzijiang.github.io/ntpc-emtp-sop-2024/updates.html）。<strong>草稿尚未定稿，臨床請以正式公告為準。</strong></p>
+    <div class="card">
+      <h3>血齡時間軸：制度怎麼走，證據走到哪</h3>
+      <div class="ageline">
+        <div class="track">
+          <div class="seg" style="left:0;width:40%;background:linear-gradient(180deg,rgba(62,198,180,.45),rgba(62,198,180,.2));color:#d6fff8">0–14 天　救護車上待命</div>
+          <div class="seg" style="left:40%;width:20%;background:linear-gradient(180deg,rgba(95,191,106,.45),rgba(95,191,106,.2));color:#e2ffe5">14–21 天</div>
+          <div class="seg" style="left:60%;width:40%;background:repeating-linear-gradient(45deg,rgba(226,64,76,.34),rgba(226,64,76,.34) 9px,rgba(226,64,76,.14) 9px,rgba(226,64,76,.14) 18px);color:#ffd9dc">21–35 天　無 RCT 證據</div>
+        </div>
+        <div class="ticks"><span>第 0 天</span><span>14 天 → U4 輪轉</span><span>21 天</span><span>35 天 → U5 報廢</span></div>
+        <p class="cap"><span class="hl2">■ TOWAR 直接驗證過的範圍：0–21 天</span>（子研究比較 1–14 天 vs 15–21 天，aOR 0.99）　<span class="hl">▨ 21–35 天：合乎血庫保存規範，但沒有 RCT 資料</span></p>
+      </div>
+      <div class="analogy" style="margin-top:.6rem">
+        <div class="emo">🍱</div>
+        <p><span class="tag">比喻</span>U4／U5 就是<b>超商鮮食的「先進先出」</b>：快到期的先下架、轉到別的通路賣掉，而不是擺到壞掉再丟。差別是——<b>御飯糰過期損失 40 元，這裡損失的是別人捐的一袋血。</b></p>
+      </div>
+    </div>
+    <p class="fine">資料來源：<a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/" target="_blank">新北市 EMTP SOP 113 年定本線上版</a> × <a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/updates.html" target="_blank">115 年修訂草稿更新摘要</a>（非官方對照整理）。<strong>草稿尚未定稿，臨床請以正式公告為準。</strong></p>
   </div>
 </section>
 
@@ -1409,8 +1575,12 @@ caption{caption-side:bottom;text-align:left;font-size:18px;color:var(--dim);padd
       <div>
         <h3 style="color:var(--teal)">台灣 / 新北</h3>
         <ul class="fine">
-          <li><strong>新北市 EMTP SOP 2024（113 年定本）線上版</strong>——U1 雙軌派遣 p.154／U2 緊急輸血 p.170／U3 輸血反應 p.176<br>limzijiang.github.io/ntpc-emtp-sop-2024</li>
-          <li><strong>115 年(2026) 修訂草稿更新摘要</strong>（U1–U5 院前存血制度；非官方對照整理，草稿未定稿）<br>limzijiang.github.io/ntpc-emtp-sop-2024/updates.html</li>
+          <li><strong>新北市 EMTP SOP 2024（113 年定本）線上版</strong>——直接跳頁：
+            <a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p154" target="_blank">U1 雙軌派遣 p.154</a>　
+            <a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p170" target="_blank">U2 緊急輸血 p.170</a>　
+            <a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/#p176" target="_blank">U3 輸血反應 p.176</a></li>
+          <li><a href="https://limzijiang.github.io/ntpc-emtp-sop-2024/updates.html" target="_blank"><strong>115 年(2026) 修訂草稿更新摘要</strong></a>（U1–U5 院前存血制度；非官方對照整理，<strong>草稿未定稿</strong>）</li>
+          <li>其他線上 SOP：<a href="https://limzijiang.github.io/emtp-sop/" target="_blank">EMTP SOP 統一入口</a>　·　<a href="https://limzijiang.github.io/taipei-emtp-sop/" target="_blank">臺北市 EMTP SOP</a></li>
           <li>《到院前輸血現況與挑戰》，台灣急診醫學會電子月刊<br>sem.org.tw/Ejournal/Detail/724</li>
           <li>〈新北雙軌救援網〉，新新聞 / 風傳媒<br>new7.storm.mg/article/5494688</li>
           <li>〈【院前輸血】3 年等待、一袋血的勇氣：台灣急救團隊如何把醫院推進車禍現場？〉，康健雜誌 93053</li>
