@@ -688,6 +688,79 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
   </div>
 </section>
 
+<!-- ITT ① ─────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播</div>
+  <h2>ITT 分析是什麼？為什麼不能只算「有乖乖照做的人」？<span class="sub">intention-to-treat：這篇的 993 人是怎麼算出來的</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <h3>① 一句話定義</h3>
+        <p><strong>意向治療分析（intention-to-treat, ITT）</strong>：<span class="hl">按病人「<strong>被隨機分到哪一組</strong>」來計算，不管他實際拿到什麼治療。</span></p>
+        <p style="margin-top:.5rem">在 TOWAR：一個被分到全血組、但現場其實只輸到成分血的病人——<strong>他仍然算在全血組</strong>。</p>
+        
+      </div>
+      <div class="card red">
+        <h3>② 為什麼不能「誰照做就算誰」</h3>
+        <p>因為<strong>隨機化保護的不是治療，是「兩組的可比性」</strong>——年齡、傷勢、共病、運氣，全部隨機分散到兩邊。</p>
+        <p style="margin-top:.45rem">一旦按「實際治療」重新分組，<span class="hl">分組依據就變成事後發生的事</span>——會偏離方案的人本身就跟乖乖照做的人不一樣（更重、更早死）。</p>
+        <p class="fine" style="margin-top:.5rem">→ 隨機化辛苦建立的平衡，<em>在你剔除病人的那一刻就沒了</em>，干擾又全部跑回來。</p>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card teal">
+        <h3>③ 三種算法，回答三個不同問題</h3>
+        <table><tbody>
+          <tr><td><strong>ITT</strong> <span class="fine">按分派組別</span></td><td>「<strong>照這個策略做</strong>，結果如何？」<span class="fine">保留隨機化，主要分析用它</span></td></tr>
+          <tr><td><strong>Per-protocol</strong> <span class="fine">只算照做的</span></td><td>「<strong>都做到位的話</strong>，療效多大？」<span class="fine">破壞隨機化，只能佐證</span></td></tr>
+          <tr><td><strong>As-treated</strong> <span class="fine">按實際治療</span></td><td>「實際拿到的人如何？」<span class="fine">等同觀察性研究</span></td></tr>
+        </tbody></table>
+        <p class="fine">TOWAR 主要分析用<strong>修正 ITT</strong>；per-protocol 分析見補充資料 Table S5、S6。</p>
+      </div>
+      <div>
+        <div class="analogy">
+          <div class="emo">🔪</div>
+          <p><span class="tag">比喻</span>把病人隨機分成<b>開刀組</b>和<b>吃藥組</b>，開刀組有 5 人<b>還沒推進手術室就死了</b>。若說「他們沒開到刀，不算開刀組」——<b>等於把開刀組最重的人全刪掉</b>，手術當然看起來神效。<br>口訣：<span class="hl">Once randomized, always analyzed.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ITT ② ─────────────────────────────────────── -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播（續）</div>
+  <h2>那 TOWAR 的「修正」修在哪？31.6% 又代表什麼？<span class="sub">這一頁決定你要怎麼看待這篇的陰性結果</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <h3>④ 修正意向治療（modified ITT）</h3>
+        <p><strong>1,020</strong> 人隨機分派　→　扣除 <strong>27 人</strong>（全血 20、成分 7）<span class="hl">隨機分派後撤回參與</span>　→　<strong>993 人</strong>進入主要分析（695 / 298）。</p>
+        <p class="fine" style="margin-top:.5rem">為什麼會有人撤回？因為本試驗採 <strong>exception from informed consent</strong>（緊急情況下免除事前同意），事後通知病人或家屬時，<strong>他們有權要求把資料排除</strong>。</p>
+        <p class="fine" style="margin-top:.4rem">主要結果實際取得 972 人（95.3%），另 21 人（全血 13、成分 8）以補值處理；作者另做多種遺漏值敏感度分析（全部當存活／全部當死亡／直接排除），<strong>結論一致</strong>。</p>
+      </div>
+      <div class="card red">
+        <h3>⑤ 全血組裡，其實有三分之一不是「純全血」</h3>
+        <p class="fine">分派到全血組的 715 人，實際接受的是：</p>
+        <div class="ageline" style="margin:.5rem 0">
+          <div class="track">
+            <div class="seg" style="left:0;width:68.3%;background:linear-gradient(180deg,rgba(226,64,76,.5),rgba(226,64,76,.22));color:#ffd9dc">僅全血 488（68.3%）</div>
+            <div class="seg" style="left:68.3%;width:25.3%;background:repeating-linear-gradient(45deg,rgba(240,168,54,.4),rgba(240,168,54,.4) 8px,rgba(240,168,54,.16) 8px,rgba(240,168,54,.16) 16px);color:#ffe6bd">＋成分 181</div>
+            <div class="seg" style="left:93.6%;width:6.4%;background:rgba(90,169,230,.4);color:#dbeeff">45</div>
+          </div>
+          <div class="ticks"><span>全血 68.3%</span><span>全血＋成分 25.3%</span><span>只拿到成分 6.3%</span></div>
+        </div>
+        <p><span class="hl">合計 226 人（31.6%）收到了成分血</span>，但在 ITT 下他們全部仍算「全血組」。反向也有：成分組 26 人（8.5%）收到全血。</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>⑥ 方向性——這是最該學會的一點：</strong>交叉會把兩組<em>拉向中間</em>，讓真實差異被稀釋。</p>
+      <p style="margin-top:.45rem">→ 在<strong>優越性試驗（superiority）</strong>裡，ITT 因此是<span class="hl2">保守的</span>：它讓你<strong>更難</strong>做出「有差異」的結論。所以 TOWAR 這個陰性結果是「保守的陰性」——<span class="hl">不能排除全血其實有效，只是被稀釋到看不見。</span></p>
+      <p style="margin-top:.45rem">→ 但在<strong>非劣性試驗（non-inferiority）</strong>裡，同樣的稀釋反而<span class="hl">危險</span>：兩組被拉得越像，越容易錯誤地宣稱「不比較差」。<strong>同一個 ITT，在兩種試驗裡的安全方向是相反的。</strong></p>
+    </div>
+  </div>
+</section>
+
 <!-- 13 ────────────────────────────────────────── -->
 <section class="slide">
   <div class="kicker">TOWAR ─ 主要結果</div>
