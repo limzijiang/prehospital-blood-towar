@@ -148,6 +148,14 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
 .analogy b{color:var(--amber)}
 .analogy .tag{font-size:18px;font-weight:800;color:var(--amber);letter-spacing:.06em;margin-right:.4em}
 
+/* 原文圖表 slide */
+.slide.figslide h2{font-size:clamp(20px,1.5vw,26px);margin-bottom:.45rem}
+.slide.figslide .body{gap:.4rem}
+.figwrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;
+  background:#fff;border-radius:10px;padding:.4rem}
+.figwrap img{max-width:100%;max-height:68vh;object-fit:contain;display:block}
+.figsrc{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;font-size:18px;color:var(--dim)}
+
 /* 原始流程圖 */
 .chart{background:#fff;border-radius:10px;padding:.4rem;display:flex;align-items:center;justify-content:center}
 .chart img{max-width:100%;max-height:66vh;object-fit:contain;display:block}
@@ -660,6 +668,26 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
   </div>
 </section>
 
+<!-- 原文圖表 Figure 1 -->
+<section class="slide figslide">
+  <div class="kicker">原文圖表 ─ Figure 1</div>
+  <h2>Figure 1. Screening, Randomization, and Analysis<span class="sub">原文 CONSORT 流程圖：9,554 篩檢 → 1,020 隨機 → 695 / 298 進入修正 ITT 分析</span></h2>
+  <div class="body">
+    <div class="figwrap"><a href="fig/fig1_consort.webp" target="_blank"><img src="fig/fig1_consort.webp" alt="TOWAR trial CONSORT diagram"></a></div>
+    <div class="figsrc"><span>Sperry JL, et al. <em style="color:var(--dim);font-style:normal">N Engl J Med</em> 2026;394:2317-28.　© Massachusetts Medical Society</span><span>對照本簡報「收案與族群」頁　·　點圖開啟原尺寸</span></div>
+  </div>
+</section>
+
+<!-- 原文圖表 Table 1 -->
+<section class="slide figslide">
+  <div class="kicker">原文圖表 ─ Table 1</div>
+  <h2>Table 1. Characteristics of the Patients at Baseline<span class="sub">原文基線特徵表（左：前段；右：續表）——注意 TBI 與院前插管兩組不平衡</span></h2>
+  <div class="body">
+    <div class="figwrap"><a href="fig/table1.webp" target="_blank"><img src="fig/table1.webp" alt="TOWAR trial baseline characteristics table"></a></div>
+    <div class="figsrc"><span>Sperry JL, et al. <em style="color:var(--dim);font-style:normal">N Engl J Med</em> 2026;394:2317-28.　© Massachusetts Medical Society</span><span>左右並排以利閱讀　·　點圖開啟原尺寸</span></div>
+  </div>
+</section>
+
 <!-- 13 ────────────────────────────────────────── -->
 <section class="slide">
   <div class="kicker">TOWAR ─ 主要結果</div>
@@ -689,6 +717,16 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
     <div class="note">
       <p><strong>怎麼講這個結果才誠實：</strong>這是一個 <em>superiority trial 的失敗</em>，不是一個 <em>「全血有害」的證明</em>。CI 上界 1.76 確實不能排除傷害，但下界 0.87 也不能排除益處——<span class="hl">這條 CI 太寬，真正的訊息是「我們仍然不知道，但至少沒看到明顯優勢」。</span></p>
     </div>
+  </div>
+</section>
+
+<!-- 原文圖表 Figure 2 -->
+<section class="slide figslide">
+  <div class="kicker">原文圖表 ─ Figure 2</div>
+  <h2>Figure 2. Overall Survival and Subgroup Analysis of Mortality at 30 Days<span class="sub">Panel A：Kaplan–Meier 曲線（log-rank P=0.13）　Panel B：七個預先指定次族群森林圖</span></h2>
+  <div class="body">
+    <div class="figwrap"><a href="fig/fig2.webp" target="_blank"><img src="fig/fig2.webp" alt="TOWAR trial Kaplan-Meier survival curve and subgroup forest plot"></a></div>
+    <div class="figsrc"><span>Sperry JL, et al. <em style="color:var(--dim);font-style:normal">N Engl J Med</em> 2026;394:2317-28.　© Massachusetts Medical Society</span><span>本簡報的森林圖即改繪自 Panel B　·　點圖開啟原尺寸</span></div>
   </div>
 </section>
 
@@ -738,6 +776,16 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
       <p><span class="hl2">全血組的凝血功能異常反而較少（INR &gt; 1.5：20.3% vs 26.4%）</span>——完全符合「一袋血保留完整凝血因子與血小板」的生理預期。</p>
       <p style="margin-top:.4rem"><strong>但它沒有轉換成存活益處。</strong>這是 EBM 的經典教訓：<em>替代指標（surrogate）改善 ≠ 病人結果改善</em>。若當年只看 INR 就下結論，我們會得到完全相反的建議。</p>
     </div>
+  </div>
+</section>
+
+<!-- 原文圖表 Table 2 -->
+<section class="slide figslide">
+  <div class="kicker">原文圖表 ─ Table 2</div>
+  <h2>Table 2. Primary and Secondary Outcomes<span class="sub">原文主要與次要結果表——本簡報前兩頁的數字全部出自此表</span></h2>
+  <div class="body">
+    <div class="figwrap"><a href="fig/table2.webp" target="_blank"><img src="fig/table2.webp" alt="TOWAR trial primary and secondary outcomes table"></a></div>
+    <div class="figsrc"><span>Sperry JL, et al. <em style="color:var(--dim);font-style:normal">N Engl J Med</em> 2026;394:2317-28.　© Massachusetts Medical Society</span><span>次要結果未校正多重比較　·　點圖開啟原尺寸</span></div>
   </div>
 </section>
 
@@ -817,6 +865,16 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
       <div class="emo">🥛</div>
       <p><span class="tag">比喻</span>這就像發現<b>「開封第 3 天的鮮奶」和「第 18 天的鮮奶」泡出來的咖啡一樣好喝</b>。聽起來只是冷知識，但對開咖啡店的人來說是<b>生死攸關的成本問題</b>——你終於敢一次進貨了。</p>
     </div>
+  </div>
+</section>
+
+<!-- 原文圖表 Figure 3 -->
+<section class="slide figslide">
+  <div class="kicker">原文圖表 ─ Figure 3</div>
+  <h2>Figure 3. Overall Survival and Subgroup Analysis According to Storage Age<span class="sub">Panel A：1–14 天 vs 15–21 天存活曲線（log-rank P=0.93）　Panel B：次族群森林圖</span></h2>
+  <div class="body">
+    <div class="figwrap"><a href="fig/fig3.webp" target="_blank"><img src="fig/fig3.webp" alt="TOWAR trial storage age survival curves and subgroup analysis"></a></div>
+    <div class="figsrc"><span>Sperry JL, et al. <em style="color:var(--dim);font-style:normal">N Engl J Med</em> 2026;394:2317-28.　© Massachusetts Medical Society</span><span>此為觀察性子研究，非隨機分派　·　點圖開啟原尺寸</span></div>
   </div>
 </section>
 
@@ -1767,6 +1825,7 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
         <h3 style="color:var(--red)">主要論文</h3>
         <ul class="fine">
           <li>Sperry JL, Guyette FX, Cotton BA, et al. Prehospital resuscitation with type O whole blood for trauma and hemorrhage (<strong>TOWAR</strong>). <strong>N Engl J Med 2026;394:2317-28.</strong> doi:10.1056/NEJMoa2602167；NCT04684719</li>
+          <li class="fine" style="color:var(--dim)"><strong>圖表使用聲明：</strong>「原文圖表」各頁之 Figure 1–3、Table 1–2 直接重製自上述論文，著作權屬 <strong>Massachusetts Medical Society</strong>，僅供院內教學討論，各頁均標示完整出處。</li>
         </ul>
         <h3 style="color:var(--red);margin-top:.8rem">院前輸血 RCT</h3>
         <ul class="fine">
