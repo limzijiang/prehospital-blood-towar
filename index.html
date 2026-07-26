@@ -148,6 +148,19 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
 .analogy b{color:var(--amber)}
 .analogy .tag{font-size:18px;font-weight:800;color:var(--amber);letter-spacing:.06em;margin-right:.4em}
 
+/* 非劣性 CI 圖解 */
+.ni .row{display:grid;grid-template-columns:min(200px,20%) 1fr min(230px,24%);gap:.6rem;align-items:center;padding:.26rem 0;font-size:18px}
+.ni .row.hd{color:var(--dim);font-weight:700;border-bottom:1px solid var(--line)}
+.ni .bar{position:relative;height:22px;
+  background:linear-gradient(90deg,transparent 0,transparent 68%,rgba(226,64,76,.14) 68%,rgba(226,64,76,.14) 100%)}
+.ni .bar::before{content:"";position:absolute;left:40%;top:-2px;bottom:-2px;width:1px;background:var(--dim);opacity:.7}
+.ni .bar::after{content:"";position:absolute;left:68%;top:-2px;bottom:-2px;width:2px;background:var(--red)}
+.ni .ci{position:absolute;top:10px;height:2px;background:var(--muted)}
+.ni .ci i{position:absolute;top:-4px;width:2px;height:10px;background:var(--muted)}
+.ni .pt{position:absolute;top:5px;width:12px;height:12px;border-radius:2px;background:var(--teal);transform:translateX(-6px)}
+.ni .pt.bad{background:var(--red)}.ni .pt.mid{background:var(--amber)}
+.ni .axis2{display:grid;grid-template-columns:min(200px,20%) 1fr min(230px,24%);gap:.6rem;font-size:18px;color:var(--dim)}
+
 /* 原文圖表 slide */
 .slide.figslide h2{font-size:clamp(20px,1.5vw,26px);margin-bottom:.45rem}
 .slide.figslide .body{gap:.4rem}
@@ -789,6 +802,94 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
     </div>
     <div class="note">
       <p><strong>怎麼講這個結果才誠實：</strong>這是一個 <em>superiority trial 的失敗</em>，不是一個 <em>「全血有害」的證明</em>。CI 上界 1.76 確實不能排除傷害，但下界 0.87 也不能排除益處——<span class="hl">這條 CI 太寬，真正的訊息是「我們仍然不知道，但至少沒看到明顯優勢」。</span></p>
+    </div>
+  </div>
+</section>
+
+<!-- 優越性 vs 非劣性 ① -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播</div>
+  <h2>優越性試驗 vs 非劣性試驗：問的根本不是同一個問題<span class="sub">superiority trial / non-inferiority trial</span></h2>
+  <div class="body">
+    <div class="cols">
+      <div class="card">
+        <h3>① 三種問法</h3>
+        <table><tbody>
+          <tr class="key"><td><strong>優越性</strong><br><span class="fine">superiority</span></td><td>「新的<strong>比較好</strong>嗎？」<span class="fine">預設兩者相同，要拿證據推翻它</span></td></tr>
+          <tr><td><strong>非劣性</strong><br><span class="fine">non-inferiority</span></td><td>「新的<strong>有沒有差到不能接受</strong>？」<span class="fine">只需證明沒有輸超過某個幅度</span></td></tr>
+          <tr><td><strong>等效性</strong><br><span class="fine">equivalence</span></td><td>「兩邊<strong>差距夠小</strong>嗎？」<span class="fine">雙向都要設界線，最嚴格</span></td></tr>
+        </tbody></table>
+      </div>
+      <div class="card teal">
+        <h3>② 為什麼會需要「非劣性」這種東西？</h3>
+        <p>因為<strong>很多新做法本來就不是為了更有效</strong>，而是為了更安全、更便宜、更好執行。</p>
+        <ul style="margin-top:.4rem">
+          <li>DOAC vs warfarin —— 不用抽 INR</li>
+          <li>口服 vs 靜脈抗生素 —— 可以出院</li>
+          <li>短療程 vs 長療程 —— 副作用少</li>
+        </ul>
+        <p class="fine" style="margin-top:.4rem">這些如果硬做優越性試驗，<strong>幾乎注定失敗</strong>——但失敗不代表它們沒有價值。</p>
+      </div>
+    </div>
+    <div class="cols">
+      <div class="card amber">
+        <h3>③ 非劣性的靈魂：那條界線 Δ</h3>
+        <p><strong>非劣性界線（non-inferiority margin, Δ）</strong>＝「<span class="hl">為了換取那些好處，我最多願意犧牲多少療效</span>」。</p>
+        <p class="fine" style="margin-top:.4rem">必須<strong>事前訂定</strong>、要有臨床與統計上的理由，不能等看到結果再決定。Δ 訂得越寬，「非劣」越容易達成——<em>這也是最常被質疑的地方</em>。</p>
+      </div>
+      <div>
+        <div class="card red">
+          <h3>④ 判讀看的是「信賴區間落在哪」</h3>
+          <p class="fine">優越性看 P 值；<strong>非劣性看 CI 有沒有越過 Δ</strong>。<span class="hl">P 值在非劣性試驗裡幾乎沒有意義。</span></p>
+        </div>
+        <div class="analogy" style="margin-top:.6rem">
+          <div class="emo">☕</div>
+          <p><span class="tag">比喻</span>超商咖啡不需要證明<b>比星巴克好喝</b>——它只需要證明<b>沒有難喝到某個程度</b>，因為它便宜、到處都有、30 秒就好。<b>那個「某個程度」就是 Δ。</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 優越性 vs 非劣性 ② -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播（續）</div>
+  <h2>一張圖看懂五種結果——以及 TOWAR 站在哪裡<span class="sub">灰線 = 無差異　紅線 = 非劣性界線 Δ　紅區 = 差到不能接受（示意圖，非等比例）</span></h2>
+  <div class="body">
+    <div class="ni">
+      <div class="row hd"><div>情境</div><div>← 新的較好　　　　　新的較差 →</div><div>結論</div></div>
+      <div class="row"><div>① CI 全在灰線左側</div>
+        <div class="bar"><div class="ci" style="left:10%;width:22%"><i style="left:0"></i><i style="right:0"></i></div><div class="pt" style="left:21%"></div></div>
+        <div class="hl2">優越（也必然非劣）</div></div>
+      <div class="row"><div>② 跨灰線，但沒碰紅線</div>
+        <div class="bar"><div class="ci" style="left:30%;width:30%"><i style="left:0"></i><i style="right:0"></i></div><div class="pt mid" style="left:45%"></div></div>
+        <div class="hl2">非劣，但未達優越</div></div>
+      <div class="row"><div>③ 跨過紅線，也跨灰線</div>
+        <div class="bar"><div class="ci" style="left:33%;width:45%"><i style="left:0"></i><i style="right:0"></i></div><div class="pt mid" style="left:52%"></div></div>
+        <div class="hl">無結論（inconclusive）</div></div>
+      <div class="row"><div>④ 越過紅線且整段偏右</div>
+        <div class="bar"><div class="ci" style="left:55%;width:30%"><i style="left:0"></i><i style="right:0"></i></div><div class="pt bad" style="left:70%"></div></div>
+        <div class="hl">未達非劣（劣性）</div></div>
+      <div class="row tot" style="border-top:1px solid var(--line);margin-top:.2rem;padding-top:.4rem">
+        <div><strong>TOWAR 實際結果</strong><br><span class="fine">aOR 1.24（0.87–1.76）</span></div>
+        <div class="bar"><div class="ci" style="left:31%;width:41%"><i style="left:0"></i><i style="right:0"></i></div><div class="pt mid" style="left:47%"></div></div>
+        <div class="hl">未能證明優越<br><span class="fine">且<strong>無法</strong>宣稱非劣</span></div></div>
+    </div>
+    <div class="cols" style="margin-top:.5rem">
+      <div class="card red">
+        <h3>為什麼 TOWAR 不能說「兩者相當」？</h3>
+        <p class="fine">因為它是<strong>優越性試驗，從頭到尾沒有預先訂過 Δ</strong>。沒有界線，就沒有「非劣」這個結論可以下。</p>
+        <p style="margin-top:.4rem"><span class="hl">Failure to show superiority ≠ proof of equivalence.</span><br><span class="fine">未能證明更好 ≠ 證明一樣好。上圖 TOWAR 那列的紅線為<strong>假設性</strong>的 Δ，僅供對照位置之用。</span></p>
+      </div>
+      <div class="card amber">
+        <h3>一個值得想的問題</h3>
+        <p class="fine">全血的價值主張<strong>本來就是非劣性的</strong>——「療效不輸，但後勤簡單得多」。</p>
+        <p class="fine" style="margin-top:.4rem">那為什麼做成優越性試驗？<span class="hl">因為當年觀察性研究都說它更好</span>（SWAT、統合分析），研究者真心相信它會贏。</p>
+        <p class="fine" style="margin-top:.4rem">→ 若當初設計成非劣性試驗、事前訂好 Δ，<strong>結論可能完全不同</strong>——不是數據不同，是<em>問題問得不同</em>。</p>
+      </div>
+    </div>
+    <div class="note">
+      <p><strong>這也解釋了 ITT 方向性為何倒轉：</strong>優越性試驗中稀釋讓你更難贏（保守）；非劣性試驗中稀釋讓兩組更像，<span class="hl">反而更容易「贏」</span>——故非劣性試驗規定 <strong>ITT 與 per-protocol 都要做且都要通過</strong>。</p>
     </div>
   </div>
 </section>
