@@ -148,6 +148,17 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
 .analogy b{color:var(--amber)}
 .analogy .tag{font-size:18px;font-weight:800;color:var(--amber);letter-spacing:.06em;margin-right:.4em}
 
+/* OR 軸圖解 */
+.orax{position:relative;height:60px;border-radius:8px;background:var(--panel2);border:1px solid var(--line);margin:.5rem 0 .2rem}
+.orax .null{position:absolute;left:49%;top:0;bottom:0;width:1px;background:var(--dim);opacity:.8}
+.orax .ci{position:absolute;top:28px;height:3px;background:var(--amber)}
+.orax .ci i{position:absolute;top:-5px;width:3px;height:13px;background:var(--amber)}
+.orax .pt{position:absolute;top:22px;width:15px;height:15px;border-radius:3px;background:var(--amber);transform:translateX(-7.5px)}
+.orax .tgt{position:absolute;top:22px;width:15px;height:15px;border-radius:50%;background:var(--teal);transform:translateX(-7.5px)}
+.orax .lab{position:absolute;font-size:18px;white-space:nowrap;transform:translateX(-50%)}
+.orax .lab.up{top:2px}.orax .lab.dn{bottom:2px}
+.orscale{display:flex;justify-content:space-between;font-size:18px;color:var(--dim)}
+
 /* 非劣性 CI 圖解 */
 .ni .row{display:grid;grid-template-columns:min(200px,20%) 1fr min(230px,24%);gap:.6rem;align-items:center;padding:.26rem 0;font-size:18px}
 .ni .row.hd{color:var(--dim);font-weight:700;border-bottom:1px solid var(--line)}
@@ -890,6 +901,44 @@ a.srcbtn{display:inline-block;background:rgba(90,169,230,.12);border:1px solid r
     </div>
     <div class="note">
       <p><strong>這也解釋了 ITT 方向性為何倒轉：</strong>優越性試驗中稀釋讓你更難贏（保守）；非劣性試驗中稀釋讓兩組更像，<span class="hl">反而更容易「贏」</span>——故非劣性試驗規定 <strong>ITT 與 per-protocol 都要做且都要通過</strong>。</p>
+    </div>
+  </div>
+</section>
+
+<!-- 26→16 vs 兩條線 -->
+<section class="slide dense">
+  <div class="kicker">TOWAR ─ 方法學插播（續）</div>
+  <h2>那「26% → 16%」是哪一條線？<span class="sub">答案：兩條都不是——這是三個最常被混為一談的門檻</span></h2>
+  <div class="body">
+    <table>
+      <thead><tr><th>門檻</th><th>用在哪個階段</th><th>怎麼用</th><th>TOWAR</th></tr></thead>
+      <tbody>
+        <tr class="key"><td><strong>目標差異</strong><br><span class="fine">target difference<br>＝ 26% → 16%</span></td><td><strong>設計階段</strong><br><span class="fine">算樣本數用</span></td><td>「我<strong>希望能偵測到</strong>多大的差異」<br><span class="fine">是一個<em>假設</em>，決定要收幾個人</span></td><td>有<br><span class="fine">10 個百分點</span></td></tr>
+        <tr><td><strong>虛無假設線</strong><br><span class="fine">null ＝ OR 1.0（灰線）</span></td><td><strong>檢定階段</strong></td><td>CI 有沒有跨過它 → 決定「有沒有差異」</td><td class="hl2">有</td></tr>
+        <tr><td><strong>非劣性界線</strong><br><span class="fine">Δ margin（紅線）</span></td><td><strong>判讀階段</strong></td><td>「我<strong>最多能容忍</strong>差多少」<br><span class="fine">是一個<em>決策門檻</em>，事前訂死</span></td><td class="hl">沒有</td></tr>
+      </tbody>
+      <caption>兩者常同樣寫成「Δ」：一個是<strong>假設</strong>（算樣本數用），一個是<strong>判讀門檻</strong>（跟 CI 比）。<span class="hl">目標差異永遠不拿來跟 CI 比對。</span></caption>
+    </table>
+
+    <div class="card">
+      <h3>把它們畫在同一條軸上（勝算比，對數尺度）</h3>
+      <div class="orax">
+        <div class="null"></div>
+        <div class="lab up" style="left:49%;color:var(--dim)">OR 1.0 無差異</div>
+        <div class="tgt" style="left:16.2%"></div>
+        <div class="lab dn" style="left:16.2%;color:var(--teal)">設計時瞄準的效果 OR≈0.54</div>
+        <div class="ci" style="left:41.5%;width:37.7%"><i style="left:0"></i><i style="right:0"></i></div>
+        <div class="pt" style="left:60.4%"></div>
+        <div class="lab up" style="left:60.4%;color:var(--amber)">實際 aOR 1.24（0.87–1.76）</div>
+      </div>
+      <div class="orscale"><span>0.4　← 全血較好</span><span>1.0</span><span>全血較差 →　2.6</span></div>
+      <p class="fine">26% vs 16% 換算成勝算比約 <strong>0.54</strong>，落在最左邊。<span class="hl">實際 CI 連碰都沒碰到那個區域。</span></p>
+    </div>
+
+    <div class="note">
+      <p><strong>把 CI 換回絕對死亡率（以成分組實際的 20.5% 為基準）：</strong></p>
+      <p style="margin-top:.35rem">CI 下界 0.87 → 全血 <strong>18.3%</strong>（好 2.2 個百分點）　·　點估計 1.24 → <strong>24.2%</strong>（差 3.7）　·　CI 上界 1.76 → <strong>31.2%</strong>（差 <strong>10.7</strong> 個百分點）</p>
+      <p style="margin-top:.45rem"><span class="hl">於是出現一個很諷刺的對稱：這個試驗是為了偵測「全血好 10 個百分點」而設計的，但跑完之後，連「全血差 10.7 個百分點」都還排除不掉。</span>這就是為什麼我們只能說「未能證明更好」，而不能說「兩者相當」。</p>
     </div>
   </div>
 </section>
